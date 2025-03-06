@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../../../Users/HP/Downloads/8025532-removebg-preview.png</file>
+        <file>../../../../../Users/HP/Downloads/loupe-et-icone-de-recherche-de-couleur-grise.png</file>
+        <file>../../presentation commerciale/h5.jpg</file>
+        <file>../../../../../Users/HP/Downloads/error-alert-button-symbol.zip</file>
+        <file>../../presentation commerciale/995dc29c-3ed8-4308-86a4-dfef0d4a877b.jpg</file>
+        <file>image/enregistrer.png</file>
+        <file>image/supprimer.png</file>
+         <file>image/update4.png</file>
+         <file>image/historique.png</file>
+    </qresource>
+</RCC>
