@@ -1,13 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>image.qrc/8025532.jpg</file>
-        <file>image.qrc/search-icon.webp</file>
-        <file>image.qrc/loupe-et-icone-de-recherche-de-couleur-grise.png</file>
-        <file>image.qrc/8025532-removebg-preview.png</file>
-        <file>../../../../../../../../Downloads/Untitled_design__3_-removebg-preview.png</file>
-        <file>image.qrc/download.png</file>
-        <file>image.qrc/remove.png</file>
-        <file>image.qrc/edit.png</file>
+        <file>image.qrc/logo.png</file>
         <file>image.qrc/flyer.png</file>
+        <file>image.qrc/edit.png</file>
+        <file>image.qrc/remove.png</file>
+        <file>image.qrc/download.png</file>
+        <file>image.qrc/search.png</file>
+
     </qresource>
 </RCC>

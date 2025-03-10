@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>1024</width>
       <height>701</height>
      </rect>
@@ -216,7 +216,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>300</y>
+         <y>250</y>
          <width>201</width>
          <height>31</height>
         </rect>
@@ -238,24 +238,11 @@ QPlainTextEdit
         <string>type</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_8">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>220</y>
-         <width>81</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>formateur</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_9">
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>259</y>
+         <y>210</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -264,17 +251,17 @@ QPlainTextEdit
         <string>nombre de participants</string>
        </property>
       </widget>
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="nbr_participants">
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>260</y>
+         <y>210</y>
          <width>81</width>
          <height>29</height>
         </rect>
        </property>
       </widget>
-      <widget class="QDateTimeEdit" name="dateTimeEdit">
+      <widget class="QDateTimeEdit" name="date_debut">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -284,7 +271,7 @@ QPlainTextEdit
         </rect>
        </property>
       </widget>
-      <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+      <widget class="QDateTimeEdit" name="date_fin">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -294,7 +281,7 @@ QPlainTextEdit
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="nom">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -304,7 +291,7 @@ QPlainTextEdit
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="lieu">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -314,7 +301,7 @@ QPlainTextEdit
         </rect>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="type">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -334,39 +321,11 @@ QPlainTextEdit
         </property>
        </item>
       </widget>
-      <widget class="QComboBox" name="comboBox_2">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>210</y>
-         <width>191</width>
-         <height>28</height>
-        </rect>
-       </property>
-       <property name="minimumContentsLength">
-        <number>0</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>a </string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>b</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>c</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="ajouter_evenement">
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>570</y>
+         <y>560</y>
          <width>83</width>
          <height>29</height>
         </rect>
@@ -378,8 +337,8 @@ QPlainTextEdit
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
-         <x>160</x>
-         <y>570</y>
+         <x>170</x>
+         <y>560</y>
          <width>83</width>
          <height>29</height>
         </rect>
@@ -388,114 +347,16 @@ QPlainTextEdit
         <string>Annuler</string>
        </property>
       </widget>
-      <widget class="QPlainTextEdit" name="plainTextEdit">
+      <widget class="QPlainTextEdit" name="description">
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>340</y>
+         <y>290</y>
          <width>291</width>
-         <height>221</height>
+         <height>241</height>
         </rect>
        </property>
       </widget>
-     </widget>
-     <widget class="QTableWidget" name="tableWidget">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>60</y>
-        <width>671</width>
-        <height>281</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QTableView {
-    background-color: #EDECEA; /* Fond du tableau */
-    border: 2px solid #838DB1; /* Bordure subtile */
-    border-radius: 10px; /* Arrondi */
-    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */
-    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif; /* Typographie moderne */
-    font-size: 14px;
-    selection-background-color: #838DB1; /* Couleur de sélection */
-    selection-color: white; /* Texte en blanc sur sélection */
-}
-
-QHeaderView::section {
-    background-color: #263A69; /* En-têtes foncés */
-    color: white; /* Texte blanc */
-    padding: 8px;
-    border: none;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-QTableView::item {
-    padding: 6px;
-    border-bottom: 1px solid #E8E3DD; /* Séparation entre les lignes */
-}
-
-QTableView::item:selected {
-    background-color: #838DB1; /* Fond des éléments sélectionnés */
-    color: white;
-}
-</string>
-      </property>
-      <property name="rowCount">
-       <number>0</number>
-      </property>
-      <property name="columnCount">
-       <number>10</number>
-      </property>
-      <column>
-       <property name="text">
-        <string>ID </string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>nom</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>lieu</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>date debut</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>date fin</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>type</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>nombre participants</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>formateur</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>flyer</string>
-       </property>
-      </column>
      </widget>
      <widget class="QLineEdit" name="lineEdit_4">
       <property name="geometry">
@@ -503,18 +364,28 @@ QTableView::item:selected {
         <x>340</x>
         <y>10</y>
         <width>251</width>
-        <height>31</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QLineEdit {
-    font-family: &quot;Poppins&quot;, &quot;Arial&quot;, sans-serif;
+    background-color: #f5f5f5; /* Fond clair et épuré */
+    border: 2px solid #6f7dab; /* Bordure bleu-gris */
+    border-radius: 15px; /* Coins arrondis */
+    padding: 8px 15px;
     font-size: 14px;
-    background-color: #E8E3DD;
-    border: 1px solid #838db1;
-    border-radius: 5px;
-    padding: 4px;
-    color: #263A69;
+    color: #333; /* Couleur du texte */
+    selection-background-color: #6f7dab; /* Couleur de sélection */
+}
+
+QLineEdit:focus {
+    border: 2px solid #2ecc71; /* Changement de bordure au focus */
+    background-color: white; /* Fond plus visible */
+}
+
+QLineEdit::placeholder {
+    color: #999; /* Couleur du placeholder */
+    font-style: italic;
 }
 </string>
       </property>
@@ -535,7 +406,7 @@ QTableView::item:selected {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../../../../../../Downloads/search-icon.webp</pixmap>
+       <pixmap>../../../../../Downloads/search-icon.webp</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -544,19 +415,36 @@ QTableView::item:selected {
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>820</x>
+        <x>830</x>
         <y>10</y>
         <width>91</width>
-        <height>21</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QLabel {
-    font: 12pt &quot;The Year of The Camel&quot;;
-    font-weight: bold; 
-    color: #5A6A99; 
+    font-family: Arial, sans-serif;  /* Police élégante */
+    font-size: 12px;                 /* Taille du texte */
+    font-weight: bold;               /* Texte en gras */
+    color: #4B4B4B;                  /* Couleur du texte */
+    background-color: #E8E3DD;       /* Fond doux */
+    padding: 8px 9px;              /* Espacement interne */
+    border-radius: 5px;              /* Coins arrondis */
+    text-align: center;              /* Centrer le texte */
+    margin: 8px;                    /* Espacement externe */
+    border: 2px solid #D1C8B9;       /* Bordure douce */
 }
-</string>
+
+QLabel:hover {
+    background-color: #D1C8B9;       /* Fond plus foncé au survol */
+    border: 2px solid #A89F92;       /* Bordure changeante */
+}
+
+QLabel:disabled {
+    color: #A0A0A0;                  /* Couleur du texte désactivé */
+    background-color: #F0F0F0;       /* Fond plus clair quand désactivé */
+    border: 2px solid #A0A0A0;       /* Bordure désactivée */
+}</string>
       </property>
       <property name="text">
        <string>Trier par</string>
@@ -565,40 +453,44 @@ QTableView::item:selected {
      <widget class="QComboBox" name="comboBox_3">
       <property name="geometry">
        <rect>
-        <x>910</x>
-        <y>10</y>
-        <width>82</width>
+        <x>921</x>
+        <y>20</y>
+        <width>91</width>
         <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QComboBox {
-    font-family: &quot;Poppins&quot;, &quot;Arial&quot;, sans-serif;
-    font-size: 14px;
-    color: #263A69;
-    background-color: #E8E3DD;
-    border-radius: 5px;
-    padding: 4px;
+    background-color: #E8E3DD; /* Couleur de fond clair */
+    border: 2px solid #D1C8B9; /* Bordure subtile */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 5px 15px; /* Espacement interne */
+    font-size: 14px; /* Taille de texte */
+    color: #4B4B4B; /* Couleur du texte */
+    font-weight: bold;
+}
+
+QComboBox:hover {
+    border: 2px solid #D1C8B9; /* Changement de couleur au survol */
+}
+
+QComboBox:focus {
+    border: 2px solid #A89F92; /* Bordure plus foncée au focus */
+}
+
+QComboBox QAbstractItemView {
+    background-color: #FFF; /* Couleur de fond du menu déroulant */
+    border: 2px solid #D1C8B9;
+    border-radius: 10px;
+    selection-background-color: #D1C8B9; /* Couleur de sélection des éléments */
+    selection-color: #4B4B4B; /* Couleur du texte sélectionné */
+}
+
+QComboBox::down-arrow {
+    image: url(:/images/arrow.png); /* Icône de flèche personnalisée */
+    width: 20px;
+    height: 20px;
 }</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>590</x>
-        <y>10</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/loupe-et-icone-de-recherche-de-couleur-grise.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QFrame" name="frame_3">
@@ -684,81 +576,8 @@ QLineEdit {
       <property name="text">
        <string> Consulter le menu</string>
       </property>
-     </widget>
-     <widget class="QLabel" name="label_16">
-      <property name="geometry">
-       <rect>
-        <x>720</x>
-        <y>10</y>
-        <width>31</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/download.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_17">
-      <property name="geometry">
-       <rect>
-        <x>680</x>
-        <y>10</y>
-        <width>31</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/remove.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_18">
-      <property name="geometry">
-       <rect>
-        <x>640</x>
-        <y>10</y>
-        <width>31</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/edit.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_19">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>0</y>
-        <width>51</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/flyer.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
+      <property name="icon">
+       <iconset theme="QIcon::ThemeIcon::GoHome"/>
       </property>
      </widget>
      <widget class="QLabel" name="label_12">
@@ -774,10 +593,256 @@ QLineEdit {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="imagesEvents.qrc">:/image.qrc/8025532-removebg-preview.png</pixmap>
+       <pixmap resource="imagesEvents.qrc">:/image.qrc/logo.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>10</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #6f7dab, stop:1 #5b6d96); /* Dégradé bleu-gris */
+    border: 2px solid #5b6d96;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #5b6d96, stop:1 #6f7dab); /* Inversion du dégradé */
+    border: 2px solid #6f7dab;
+}
+
+QPushButton:pressed {
+    background-color: #4a5a82; /* Couleur plus foncée au clic */
+    border: 2px solid #4a5a82;
+}
+QPushButton:icon {
+    color: #4B4B4B; /* Couleur de l'icône */
+}
+
+QPushButton:disabled {
+    background-color: #D1C8B9; /* Fond pour état désactivé */
+    color: #A0A0A0; /* Couleur de texte pour désactivation */
+    border: 2px solid #A0A0A0; /* Bordure pour désactivation */
+}
+
+QPushButton:hover::icon {
+    color: #FFFFFF; /* Changement de couleur de l'icône au survol */
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset theme="QIcon::ThemeIcon::EditFind"/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="telecharger_evenement">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>10</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #6f7dab, stop:1 #3f5d7b); /* Dégradé bleu foncé */
+    border: 2px solid #3f5d7b;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #3f5d7b, stop:1 #6f7dab); /* Inversion du dégradé */
+    border: 2px solid #6f7dab;
+}
+
+QPushButton:pressed {
+    background-color: #354f73; /* Couleur plus foncée au clic */
+    border: 2px solid #354f73;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="imagesEvents.qrc">
+        <normaloff>:/image.qrc/download.png</normaloff>:/image.qrc/download.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="update_evenement">
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>10</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #0daa90, stop:1 #388E3C); /* Dégradé de vert */
+    border: 2px solid #388E3C;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #388E3C, stop:1 #4CAF50); /* Inversion du dégradé */
+    border: 2px solid #4CAF50;
+}
+
+QPushButton:pressed {
+    background-color: #2E7D32; /* Couleur plus foncée au clic */
+    border: 2px solid #2E7D32;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="imagesEvents.qrc">
+        <normaloff>:/image.qrc/edit.png</normaloff>:/image.qrc/edit.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="supprimer_evenement">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>10</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #E53935, stop:1 #B71C1C); /* Dégradé de rouge */
+    border: 2px solid #B71C1C;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #B71C1C, stop:1 #E53935); /* Inversion du dégradé */
+    border: 2px solid #E53935;
+}
+
+QPushButton:pressed {
+    background-color: #C62828; /* Couleur plus foncée au clic */
+    border: 2px solid #C62828;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset theme="QIcon::ThemeIcon::EditDelete"/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QTableView" name="tableView">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>60</y>
+        <width>671</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableView { 
+    background-color: #EDECEA; /* Fond du tableau */
+    border: 2px solid #838DB1; /* Bordure subtile */
+    border-radius: 10px; /* Arrondi */
+    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */
+    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif; /* Typographie moderne */
+    font-size: 14px;
+    selection-background-color: #838DB1; /* Couleur de sélection */
+    selection-color: white; /* Texte en blanc sur sélection */
+}
+
+QHeaderView::section {
+    background-color: #263A69; /* En-têtes foncés */
+    color: white; /* Texte blanc */
+    padding: 8px;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+QTableView::item {
+    padding: 6px;
+    border-bottom: 1px solid #E8E3DD; /* Séparation entre les lignes */
+    color: black; /* Texte noir */
+}
+
+QTableView::item:selected {
+    background-color: #838DB1; /* Fond des éléments sélectionnés */
+    color: black; /* Texte noir sur sélection */
+}
+</string>
       </property>
      </widget>
     </widget>
@@ -987,7 +1052,7 @@ QLineEdit {
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="imagesEvents.qrc">:/image.qrc/8025532-removebg-preview.png</pixmap>
+        <pixmap>:/image.qrc/8025532-removebg-preview.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
