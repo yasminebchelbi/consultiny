@@ -1,6 +1,6 @@
 #ifndef GPROJET_H
 #define GPROJET_H
-
+#include<projets.h>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -18,13 +18,17 @@ public:
     ~Gprojet();
 
 private slots:
-    void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_ajouter_projet_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_supprimer_projet_clicked();
+
+    void on_update_projet_clicked();
+
+    void on_annuler_projet_clicked();
 
 private:
     Ui::Gprojet *ui;
+    Projets P;
 };
 #endif // GPROJET_H

@@ -10,6 +10,7 @@
 #define UI_GPROJET_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
@@ -23,7 +24,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -43,48 +44,42 @@ public:
     QLabel *label_8;
     QLabel *label_9;
     QDateTimeEdit *dateTimeEdit;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QPlainTextEdit *plainTextEdit;
-    QLineEdit *lineEdit_3;
-    QLineEdit *lineEdit_5;
-    QLineEdit *lineEdit_6;
-    QLineEdit *lineEdit_7;
-    QTableWidget *tableWidget;
+    QLineEdit *lineEdit_nom;
+    QPushButton *ajouter_projet;
+    QPushButton *annuler_projet;
+    QPlainTextEdit *plainTextEdit_description;
+    QLineEdit *lineEdit_cout;
+    QLineEdit *lineEdit_adresse;
+    QLineEdit *lineEdit_budget;
+    QLineEdit *lineEdit_secteur;
     QLineEdit *lineEdit_4;
     QLabel *label_10;
     QComboBox *comboBox_3;
     QLabel *label_13;
-    QLabel *label_11;
     QLabel *label_12;
     QFrame *frame_4;
     QLabel *label_3;
     QPushButton *pushButton_7;
     QLabel *label_14;
-    QLabel *label_18;
-    QLabel *label_19;
-    QLabel *label_17;
-    QLabel *label_22;
+    QTableView *tableView;
+    QPushButton *supprimer_projet;
+    QPushButton *update_projet;
+    QPushButton *pushButton_3;
+    QPushButton *telecharger_projet;
     QWidget *tab_2;
     QLabel *label_15;
     QFrame *frame_3;
-    QLabel *label_7;
     QLabel *label_20;
-    QLabel *label_21;
     QLineEdit *lineEdit_8;
     QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit_12;
     QLabel *label_16;
     QPushButton *pushButton_8;
     QFrame *frame_2;
-    QLabel *label_29;
-    QLabel *label_30;
-    QLabel *label_31;
     QLabel *label_28;
     QLineEdit *lineEdit_9;
-    QLineEdit *lineEdit_14;
     QLineEdit *lineEdit_15;
+    QPushButton *pushButton_5;
+    QLabel *label_21;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -97,7 +92,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(20, 0, 1111, 581));
+        tabWidget->setGeometry(QRect(10, 10, 1011, 561));
         tabWidget->setStyleSheet(QString::fromUtf8("/* Style du QTabWidget */\n"
 "QTabWidget::pane {\n"
 "    border: 1px solid ;\n"
@@ -236,122 +231,131 @@ public:
         dateTimeEdit = new QDateTimeEdit(frame);
         dateTimeEdit->setObjectName("dateTimeEdit");
         dateTimeEdit->setGeometry(QRect(120, 50, 181, 29));
-        lineEdit = new QLineEdit(frame);
-        lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(120, 20, 181, 28));
-        pushButton = new QPushButton(frame);
-        pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(80, 420, 83, 29));
-        pushButton_2 = new QPushButton(frame);
-        pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(220, 420, 83, 29));
-        plainTextEdit = new QPlainTextEdit(frame);
-        plainTextEdit->setObjectName("plainTextEdit");
-        plainTextEdit->setGeometry(QRect(120, 210, 181, 201));
-        lineEdit_3 = new QLineEdit(frame);
-        lineEdit_3->setObjectName("lineEdit_3");
-        lineEdit_3->setGeometry(QRect(120, 140, 181, 28));
-        lineEdit_5 = new QLineEdit(frame);
-        lineEdit_5->setObjectName("lineEdit_5");
-        lineEdit_5->setGeometry(QRect(120, 170, 181, 28));
-        lineEdit_6 = new QLineEdit(frame);
-        lineEdit_6->setObjectName("lineEdit_6");
-        lineEdit_6->setGeometry(QRect(120, 80, 181, 28));
-        lineEdit_7 = new QLineEdit(frame);
-        lineEdit_7->setObjectName("lineEdit_7");
-        lineEdit_7->setGeometry(QRect(120, 110, 181, 28));
-        tableWidget = new QTableWidget(tab);
-        if (tableWidget->columnCount() < 7)
-            tableWidget->setColumnCount(7);
-        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
-        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
-        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(5, __qtablewidgetitem5);
-        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(6, __qtablewidgetitem6);
-        if (tableWidget->rowCount() < 7)
-            tableWidget->setRowCount(7);
-        tableWidget->setObjectName("tableWidget");
-        tableWidget->setGeometry(QRect(340, 80, 651, 241));
-        tableWidget->setStyleSheet(QString::fromUtf8("QTableView {\n"
-"    background-color: #EDECEA; /* Fond du tableau */\n"
-"    border: 2px solid #838DB1; /* Bordure subtile */\n"
-"    border-radius: 10px; /* Arrondi */\n"
-"    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */\n"
-"    font-family: \"Segoe UI\", \"Arial\", sans-serif; /* Typographie moderne */\n"
-"    font-size: 14px;\n"
-"    selection-background-color: #838DB1; /* Couleur de s\303\251lection */\n"
-"    selection-color: white; /* Texte en blanc sur s\303\251lection */\n"
-"}\n"
-"\n"
-"QHeaderView::section {\n"
-"    background-color: #263A69; /* En-t\303\252tes fonc\303\251s */\n"
-"    color: white; /* Texte blanc */\n"
-"    padding: 8px;\n"
-"    border: none;\n"
-"    font-weight: bold;\n"
-"    border-radius: 5px;\n"
-"}\n"
-"\n"
-"QTableView::item {\n"
-"    padding: 6px;\n"
-"    border-bottom: 1px solid #E8E3DD; /* S\303\251paration entre les lignes */\n"
-"}\n"
-"\n"
-"QTableView::item:selected {\n"
-"    background-color: #838DB1; /* Fond des \303\251l\303\251ments s\303\251lectionn\303\251"
-                        "s */\n"
-"    color: white;\n"
-"}"));
-        tableWidget->setRowCount(7);
-        tableWidget->setColumnCount(7);
+        lineEdit_nom = new QLineEdit(frame);
+        lineEdit_nom->setObjectName("lineEdit_nom");
+        lineEdit_nom->setGeometry(QRect(120, 20, 181, 28));
+        ajouter_projet = new QPushButton(frame);
+        ajouter_projet->setObjectName("ajouter_projet");
+        ajouter_projet->setGeometry(QRect(80, 420, 83, 29));
+        annuler_projet = new QPushButton(frame);
+        annuler_projet->setObjectName("annuler_projet");
+        annuler_projet->setGeometry(QRect(220, 420, 83, 29));
+        plainTextEdit_description = new QPlainTextEdit(frame);
+        plainTextEdit_description->setObjectName("plainTextEdit_description");
+        plainTextEdit_description->setGeometry(QRect(120, 210, 181, 201));
+        lineEdit_cout = new QLineEdit(frame);
+        lineEdit_cout->setObjectName("lineEdit_cout");
+        lineEdit_cout->setGeometry(QRect(120, 140, 181, 28));
+        lineEdit_adresse = new QLineEdit(frame);
+        lineEdit_adresse->setObjectName("lineEdit_adresse");
+        lineEdit_adresse->setGeometry(QRect(120, 170, 181, 28));
+        lineEdit_budget = new QLineEdit(frame);
+        lineEdit_budget->setObjectName("lineEdit_budget");
+        lineEdit_budget->setGeometry(QRect(120, 80, 181, 28));
+        lineEdit_secteur = new QLineEdit(frame);
+        lineEdit_secteur->setObjectName("lineEdit_secteur");
+        lineEdit_secteur->setGeometry(QRect(120, 110, 181, 28));
         lineEdit_4 = new QLineEdit(tab);
         lineEdit_4->setObjectName("lineEdit_4");
-        lineEdit_4->setGeometry(QRect(340, 20, 201, 28));
-        lineEdit_4->setStyleSheet(QString::fromUtf8("QLineEdit#searchBar {\n"
-"    border: 2px solid #AAAAAA;\n"
-"    border-radius: 5px;\n"
-"    padding: 4px;\n"
+        lineEdit_4->setGeometry(QRect(340, 10, 171, 41));
+        lineEdit_4->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #f5f5f5; /* Fond clair et \303\251pur\303\251 */\n"
+"    border: 2px solid #6f7dab; /* Bordure bleu-gris */\n"
+"    border-radius: 15px; /* Coins arrondis */\n"
+"    padding: 8px 15px;\n"
+"    font-size: 14px;\n"
+"    color: #333; /* Couleur du texte */\n"
+"    selection-background-color: #6f7dab; /* Couleur de s\303\251lection */\n"
 "}\n"
 "\n"
-"QLineEdit#searchBar:hover {\n"
-"    border: 2px solid #1E90FF;\n"
-"}"));
+"QLineEdit:focus {\n"
+"    border: 2px solid #2ecc71; /* Changement de bordure au focus */\n"
+"    background-color: white; /* Fond plus visible */\n"
+"}\n"
+"\n"
+"QLineEdit::placeholder {\n"
+"    color: #999; /* Couleur du placeholder */\n"
+"    font-style: italic;\n"
+"}\n"
+""));
+        lineEdit_4->setReadOnly(true);
         label_10 = new QLabel(tab);
         label_10->setObjectName("label_10");
-        label_10->setGeometry(QRect(860, 10, 71, 21));
-        label_10->setStyleSheet(QString::fromUtf8("font: 700 11pt \"Times New Roman\";"));
+        label_10->setGeometry(QRect(820, 10, 91, 51));
+        label_10->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 12px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 8px 9px;              /* Espacement interne */\n"
+"    border-radius: 5px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 8px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sactiv"
+                        "\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}\n"
+""));
         comboBox_3 = new QComboBox(tab);
         comboBox_3->addItem(QString());
         comboBox_3->addItem(QString());
         comboBox_3->setObjectName("comboBox_3");
-        comboBox_3->setGeometry(QRect(920, 10, 82, 28));
-        comboBox_3->setStyleSheet(QString::fromUtf8("font: 12pt \"Segoe UI\";\n"
-"font: 9pt \"Times New Roman\";"));
+        comboBox_3->setGeometry(QRect(910, 20, 101, 28));
+        comboBox_3->setStyleSheet(QString::fromUtf8("QComboBox {\n"
+"    background-color: #E8E3DD; /* Couleur de fond clair */\n"
+"    border: 2px solid #D1C8B9; /* Bordure subtile */\n"
+"    border-radius: 10px; /* Coins arrondis */\n"
+"    padding: 5px 15px; /* Espacement interne */\n"
+"    font-size: 14px; /* Taille de texte */\n"
+"    color: #4B4B4B; /* Couleur du texte */\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    border: 2px solid #D1C8B9; /* Changement de couleur au survol */\n"
+"}\n"
+"\n"
+"QComboBox:focus {\n"
+"    border: 2px solid #A89F92; /* Bordure plus fonc\303\251e au focus */\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #FFF; /* Couleur de fond du menu d\303\251roulant */\n"
+"    border: 2px solid #D1C8B9;\n"
+"    border-radius: 10px;\n"
+"    selection-background-color: #D1C8B9; /* Couleur de s\303\251lection des \303\251l\303\251ments */\n"
+"    selection-color: #4B4B4B; /* Couleur du texte s\303\251lectionn\303\251 */\n"
+"}\n"
+"\n"
+"QComboBox::down-arrow {\n"
+"    image: url(:/images/arrow.png)"
+                        "; /* Ic\303\264ne de fl\303\250che personnalis\303\251e */\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"}\n"
+""));
         label_13 = new QLabel(tab);
         label_13->setObjectName("label_13");
         label_13->setGeometry(QRect(850, 510, 191, 171));
         label_13->setPixmap(QPixmap(QString::fromUtf8(":/image.qrc/8025532-removebg-preview.png")));
         label_13->setScaledContents(true);
-        label_11 = new QLabel(tab);
-        label_11->setObjectName("label_11");
-        label_11->setGeometry(QRect(540, 20, 51, 31));
-        label_11->setPixmap(QPixmap(QString::fromUtf8(":/Users/HP/Downloads/loupe-et-icone-de-recherche-de-couleur-grise.png")));
-        label_11->setScaledContents(true);
         label_12 = new QLabel(tab);
         label_12->setObjectName("label_12");
         label_12->setGeometry(QRect(390, 370, 49, 16));
         frame_4 = new QFrame(tab);
         frame_4->setObjectName("frame_4");
-        frame_4->setGeometry(QRect(350, 360, 531, 181));
+        frame_4->setGeometry(QRect(350, 270, 531, 181));
         frame_4->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -392,6 +396,9 @@ public:
 "}\n"
 "\n"
 ""));
+        QIcon icon(QIcon::fromTheme(QIcon::ThemeIcon::GoHome));
+        pushButton_7->setIcon(icon);
+        pushButton_7->setIconSize(QSize(30, 30));
         label_14 = new QLabel(tab);
         label_14->setObjectName("label_14");
         label_14->setGeometry(QRect(860, 450, 171, 91));
@@ -401,26 +408,179 @@ public:
 "}"));
         label_14->setPixmap(QPixmap(QString::fromUtf8(":/Users/HP/Downloads/8025532-removebg-preview.png")));
         label_14->setScaledContents(true);
-        label_18 = new QLabel(tab);
-        label_18->setObjectName("label_18");
-        label_18->setGeometry(QRect(650, 10, 31, 41));
-        label_18->setPixmap(QPixmap(QString::fromUtf8(":/image/update4.png")));
-        label_18->setScaledContents(true);
-        label_19 = new QLabel(tab);
-        label_19->setObjectName("label_19");
-        label_19->setGeometry(QRect(730, 10, 31, 31));
-        label_19->setPixmap(QPixmap(QString::fromUtf8(":/image/supprimer.png")));
-        label_19->setScaledContents(true);
-        label_17 = new QLabel(tab);
-        label_17->setObjectName("label_17");
-        label_17->setGeometry(QRect(690, 10, 31, 41));
-        label_17->setPixmap(QPixmap(QString::fromUtf8(":/image/enregistrer.png")));
-        label_17->setScaledContents(true);
-        label_22 = new QLabel(tab);
-        label_22->setObjectName("label_22");
-        label_22->setGeometry(QRect(770, 10, 31, 51));
-        label_22->setPixmap(QPixmap(QString::fromUtf8(":/image/historique.png")));
-        label_22->setScaledContents(true);
+        tableView = new QTableView(tab);
+        tableView->setObjectName("tableView");
+        tableView->setGeometry(QRect(340, 70, 661, 171));
+        tableView->setStyleSheet(QString::fromUtf8("QTableView {\n"
+"    background-color: #EDECEA; /* Fond du tableau */\n"
+"    border: 2px solid #838DB1; /* Bordure subtile */\n"
+"    border-radius: 10px; /* Arrondi */\n"
+"    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */\n"
+"    font-family: \"Segoe UI\", \"Arial\", sans-serif; /* Typographie moderne */\n"
+"    font-size: 14px;\n"
+"    selection-background-color: #838DB1; /* Couleur de s\303\251lection */\n"
+"    selection-color: white; /* Texte en blanc sur s\303\251lection */\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: #263A69; /* En-t\303\252tes fonc\303\251s */\n"
+"    color: white; /* Texte blanc */\n"
+"    padding: 8px;\n"
+"    border: none;\n"
+"    font-weight: bold;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"QTableView::item {\n"
+"    padding: 6px;\n"
+"    border-bottom: 1px solid #E8E3DD; /* S\303\251paration entre les lignes */\n"
+"}\n"
+"\n"
+"QTableView::item:selected {\n"
+"    background-color: #838DB1; /* Fond des \303\251l\303\251ments s\303\251lectionn\303\251"
+                        "s */\n"
+"    color: white;\n"
+"}"));
+        supprimer_projet = new QPushButton(tab);
+        supprimer_projet->setObjectName("supprimer_projet");
+        supprimer_projet->setGeometry(QRect(760, 10, 61, 41));
+        supprimer_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #E53935, stop:1 #B71C1C); /* D\303\251grad\303\251 de rouge */\n"
+"    border: 2px solid #B71C1C;\n"
+"    border-radius: 15px; /* Coins arrondis */\n"
+"    padding: 10px 15px;\n"
+"    font-size: 14px;\n"
+"    color: white;\n"
+"    font-weight: bold;\n"
+"    text-transform: uppercase;\n"
+"    transition: 0.3s;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #B71C1C, stop:1 #E53935); /* Inversion du d\303\251grad\303\251 */\n"
+"    border: 2px solid #E53935;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #C62828; /* Couleur plus fonc\303\251e au clic */\n"
+"    border: 2px solid #C62828;\n"
+"}\n"
+""));
+        QIcon icon1(QIcon::fromTheme(QIcon::ThemeIcon::EditDelete));
+        supprimer_projet->setIcon(icon1);
+        supprimer_projet->setIconSize(QSize(30, 30));
+        supprimer_projet->setCheckable(false);
+        supprimer_projet->setChecked(false);
+        update_projet = new QPushButton(tab);
+        update_projet->setObjectName("update_projet");
+        update_projet->setGeometry(QRect(620, 10, 61, 41));
+        update_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #0daa90, stop:1 #388E3C); /* D\303\251grad\303\251 de vert */\n"
+"    border: 2px solid #388E3C;\n"
+"    border-radius: 15px; /* Coins arrondis */\n"
+"    padding: 10px 15px;\n"
+"    font-size: 14px;\n"
+"    color: white;\n"
+"    font-weight: bold;\n"
+"    text-transform: uppercase;\n"
+"    transition: 0.3s;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #388E3C, stop:1 #4CAF50); /* Inversion du d\303\251grad\303\251 */\n"
+"    border: 2px solid #4CAF50;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #2E7D32; /* Couleur plus fonc\303\251e au clic */\n"
+"    border: 2px solid #2E7D32;\n"
+"}\n"
+""));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/image/update4.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        update_projet->setIcon(icon2);
+        update_projet->setIconSize(QSize(30, 30));
+        update_projet->setCheckable(true);
+        update_projet->setAutoDefault(false);
+        update_projet->setFlat(false);
+        pushButton_3 = new QPushButton(tab);
+        pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setGeometry(QRect(520, 10, 51, 41));
+        pushButton_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #6f7dab, stop:1 #5b6d96); /* D\303\251grad\303\251 bleu-gris */\n"
+"    border: 2px solid #5b6d96;\n"
+"    border-radius: 15px; /* Coins arrondis */\n"
+"    padding: 10px 15px;\n"
+"    font-size: 14px;\n"
+"    color: white;\n"
+"    font-weight: bold;\n"
+"    text-transform: uppercase;\n"
+"    transition: 0.3s;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #5b6d96, stop:1 #6f7dab); /* Inversion du d\303\251grad\303\251 */\n"
+"    border: 2px solid #6f7dab;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #4a5a82; /* Couleur plus fonc\303\251e au clic */\n"
+"    border: 2px solid #4a5a82;\n"
+"}\n"
+"QPushButton:icon {\n"
+"    color: #4B4B4B; /* Couleur de l'ic\303\264ne */\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: #D1C8B9; /* Fond pour \303\251tat d\303\251sactiv\303\251 */\n"
+"    color: #A0A0A0; /* C"
+                        "ouleur de texte pour d\303\251sactivation */\n"
+"    border: 2px solid #A0A0A0; /* Bordure pour d\303\251sactivation */\n"
+"}\n"
+"\n"
+"QPushButton:hover::icon {\n"
+"    color: #FFFFFF; /* Changement de couleur de l'ic\303\264ne au survol */\n"
+"}"));
+        QIcon icon3(QIcon::fromTheme(QIcon::ThemeIcon::SystemSearch));
+        pushButton_3->setIcon(icon3);
+        pushButton_3->setIconSize(QSize(30, 30));
+        telecharger_projet = new QPushButton(tab);
+        telecharger_projet->setObjectName("telecharger_projet");
+        telecharger_projet->setGeometry(QRect(690, 10, 61, 41));
+        telecharger_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #6f7dab, stop:1 #3f5d7b); /* D\303\251grad\303\251 bleu fonc\303\251 */\n"
+"    border: 2px solid #3f5d7b;\n"
+"    border-radius: 15px; /* Coins arrondis */\n"
+"    padding: 10px 15px;\n"
+"    font-size: 14px;\n"
+"    color: white;\n"
+"    font-weight: bold;\n"
+"    text-transform: uppercase;\n"
+"    transition: 0.3s;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
+"                stop:0 #3f5d7b, stop:1 #6f7dab); /* Inversion du d\303\251grad\303\251 */\n"
+"    border: 2px solid #6f7dab;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #354f73; /* Couleur plus fonc\303\251e au clic */\n"
+"    border: 2px solid #354f73;\n"
+"}\n"
+""));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/image/enregistrer.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        telecharger_projet->setIcon(icon4);
+        telecharger_projet->setIconSize(QSize(30, 30));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -431,7 +591,7 @@ public:
         label_15->setScaledContents(true);
         frame_3 = new QFrame(tab_2);
         frame_3->setObjectName("frame_3");
-        frame_3->setGeometry(QRect(40, 70, 481, 371));
+        frame_3->setGeometry(QRect(40, 40, 481, 361));
         frame_3->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -440,48 +600,119 @@ public:
 "\n"
 "/* Style pour les QLabel */\n"
 "QLabel {\n"
-"    font-family: \"Arial\", sans-serif; /* Police moderne */\n"
-"    font-size: 14px; /* Taille du texte */\n"
-"    color: #EDECEA; /* Texte clair pour contraste */\n"
-"    font-weight: bold; /* Texte en gras */\n"
-"    border: none; /* Pas de contour */\n"
-"    background: none; /* Pas de fond */\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 12px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 10px 15px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border:"
+                        " 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sactiv\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
 "}\n"
 ""));
         frame_3->setFrameShape(QFrame::Shape::StyledPanel);
         frame_3->setFrameShadow(QFrame::Shadow::Raised);
-        label_7 = new QLabel(frame_3);
-        label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(30, 50, 81, 16));
         label_20 = new QLabel(frame_3);
         label_20->setObjectName("label_20");
-        label_20->setGeometry(QRect(30, 80, 81, 16));
-        label_21 = new QLabel(frame_3);
-        label_21->setObjectName("label_21");
-        label_21->setGeometry(QRect(30, 110, 81, 16));
-        label_21->setStyleSheet(QString::fromUtf8("color: rgb(90, 106, 153);\n"
-"color: rgb(255, 255, 255);"));
+        label_20->setGeometry(QRect(30, 60, 141, 71));
         lineEdit_8 = new QLineEdit(frame_3);
         lineEdit_8->setObjectName("lineEdit_8");
-        lineEdit_8->setGeometry(QRect(20, 130, 431, 171));
+        lineEdit_8->setGeometry(QRect(20, 140, 431, 171));
+        lineEdit_8->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 8px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 8px 10px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
+                        "v\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}\n"
+"QLineEdit {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
+"    font-size: 14px;\n"
+"    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"    color: #263A69;\n"
+"}"));
         lineEdit_2 = new QLineEdit(frame_3);
         lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setGeometry(QRect(120, 50, 113, 22));
-        lineEdit_12 = new QLineEdit(frame_3);
-        lineEdit_12->setObjectName("lineEdit_12");
-        lineEdit_12->setGeometry(QRect(120, 80, 113, 22));
+        lineEdit_2->setGeometry(QRect(180, 80, 131, 31));
+        lineEdit_2->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 8px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 8px 10px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
+                        "v\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}\n"
+"QLineEdit {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
+"    font-size: 14px;\n"
+"    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"    color: #263A69;\n"
+"}"));
         label_16 = new QLabel(frame_3);
         label_16->setObjectName("label_16");
-        label_16->setGeometry(QRect(130, 10, 241, 31));
+        label_16->setGeometry(QRect(100, 0, 241, 61));
         pushButton_8 = new QPushButton(frame_3);
         pushButton_8->setObjectName("pushButton_8");
-        pushButton_8->setGeometry(QRect(314, 330, 111, 31));
+        pushButton_8->setGeometry(QRect(350, 320, 111, 31));
         pushButton_8->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
 "\n"
-"    background-color: #6F7DAB;\n"
-"    color: #E8E3DD;\n"
+"    background-color: #E8E3DD;\n"
+"    color: #6F7DAB;\n"
 "    border-radius: 5px;\n"
 "    padding: 8px;\n"
 "    font-size: 14px;\n"
@@ -494,7 +725,7 @@ public:
 ""));
         frame_2 = new QFrame(tab_2);
         frame_2->setObjectName("frame_2");
-        frame_2->setGeometry(QRect(560, 80, 291, 341));
+        frame_2->setGeometry(QRect(560, 40, 371, 361));
         frame_2->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -503,44 +734,133 @@ public:
 "\n"
 "/* Style pour les QLabel */\n"
 "QLabel {\n"
-"    font-family: \"Arial\", sans-serif; /* Police moderne */\n"
-"    font-size: 14px; /* Taille du texte */\n"
-"    color: #EDECEA; /* Texte clair pour contraste */\n"
-"    font-weight: bold; /* Texte en gras */\n"
-"    border: none; /* Pas de contour */\n"
-"    background: none; /* Pas de fond */\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 12px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;        /* Fond doux */\n"
+"    padding: 10px 15px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
 "}\n"
-""));
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border"
+                        ": 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sactiv\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}"));
         frame_2->setFrameShape(QFrame::Shape::StyledPanel);
         frame_2->setFrameShadow(QFrame::Shadow::Raised);
-        label_29 = new QLabel(frame_2);
-        label_29->setObjectName("label_29");
-        label_29->setGeometry(QRect(10, 40, 49, 16));
-        label_29->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"font: 700 12pt \"Times New Roman\";"));
-        label_30 = new QLabel(frame_2);
-        label_30->setObjectName("label_30");
-        label_30->setGeometry(QRect(10, 70, 141, 16));
-        label_30->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"font: 700 12pt \"Times New Roman\";"));
-        label_31 = new QLabel(frame_2);
-        label_31->setObjectName("label_31");
-        label_31->setGeometry(QRect(10, 100, 151, 16));
-        label_31->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
-"font: 700 12pt \"Times New Roman\";"));
         label_28 = new QLabel(frame_2);
         label_28->setObjectName("label_28");
-        label_28->setGeometry(QRect(40, 10, 171, 20));
+        label_28->setGeometry(QRect(70, 0, 211, 61));
         label_28->setStyleSheet(QString::fromUtf8(""));
         lineEdit_9 = new QLineEdit(frame_2);
         lineEdit_9->setObjectName("lineEdit_9");
-        lineEdit_9->setGeometry(QRect(140, 40, 113, 22));
-        lineEdit_14 = new QLineEdit(frame_2);
-        lineEdit_14->setObjectName("lineEdit_14");
-        lineEdit_14->setGeometry(QRect(140, 70, 113, 22));
+        lineEdit_9->setGeometry(QRect(190, 80, 131, 31));
+        lineEdit_9->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 8px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 8px 10px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
+                        "v\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}\n"
+"QLineEdit {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
+"    font-size: 14px;\n"
+"    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"    color: #263A69;\n"
+"}"));
         lineEdit_15 = new QLineEdit(frame_2);
         lineEdit_15->setObjectName("lineEdit_15");
-        lineEdit_15->setGeometry(QRect(50, 130, 211, 191));
+        lineEdit_15->setGeometry(QRect(30, 140, 321, 131));
+        lineEdit_15->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
+"    font-size: 8px;                 /* Taille du texte */\n"
+"    font-weight: bold;               /* Texte en gras */\n"
+"    color: #4B4B4B;                  /* Couleur du texte */\n"
+"    background-color: #E8E3DD;       /* Fond doux */\n"
+"    padding: 8px 10px;              /* Espacement interne */\n"
+"    border-radius: 8px;              /* Coins arrondis */\n"
+"    text-align: center;              /* Centrer le texte */\n"
+"    margin: 10px;                    /* Espacement externe */\n"
+"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
+"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
+"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
+                        "v\303\251 */\n"
+"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
+"}\n"
+"QLineEdit {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
+"    font-size: 14px;\n"
+"    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"    color: #263A69;\n"
+"}"));
+        pushButton_5 = new QPushButton(frame_2);
+        pushButton_5->setObjectName("pushButton_5");
+        pushButton_5->setGeometry(QRect(230, 310, 131, 31));
+        pushButton_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	font: 700 11pt \"Times New Roman\";\n"
+"	\n"
+"\n"
+"    background-color: #E8E3DD;\n"
+"    color: #6F7DAB;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px;\n"
+"    font-size: 14px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #E8E3DD;\n"
+"    color: #263A69;\n"
+"}\n"
+"\n"
+""));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/image/historique.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        pushButton_5->setIcon(icon5);
+        pushButton_5->setIconSize(QSize(30, 30));
+        label_21 = new QLabel(frame_2);
+        label_21->setObjectName("label_21");
+        label_21->setGeometry(QRect(40, 60, 141, 71));
         tabWidget->addTab(tab_2, QString());
         Gprojet->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Gprojet);
@@ -553,7 +873,8 @@ public:
 
         retranslateUi(Gprojet);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
+        update_projet->setDefault(false);
 
 
         QMetaObject::connectSlotsByName(Gprojet);
@@ -569,48 +890,30 @@ public:
         label_6->setText(QCoreApplication::translate("Gprojet", "Description:", nullptr));
         label_8->setText(QCoreApplication::translate("Gprojet", "Co\303\273t:", nullptr));
         label_9->setText(QCoreApplication::translate("Gprojet", "Adresse:", nullptr));
-        pushButton->setText(QCoreApplication::translate("Gprojet", "Ajouter", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("Gprojet", "Annuler", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("Gprojet", "Nom", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("Gprojet", "Date D\303\251but", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("Gprojet", "Description", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("Gprojet", "Adresse", nullptr));
-        QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QCoreApplication::translate("Gprojet", "cout", nullptr));
-        QTableWidgetItem *___qtablewidgetitem5 = tableWidget->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QCoreApplication::translate("Gprojet", "Secteur", nullptr));
-        QTableWidgetItem *___qtablewidgetitem6 = tableWidget->horizontalHeaderItem(6);
-        ___qtablewidgetitem6->setText(QCoreApplication::translate("Gprojet", "Budget", nullptr));
+        ajouter_projet->setText(QCoreApplication::translate("Gprojet", "Ajouter", nullptr));
+        annuler_projet->setText(QCoreApplication::translate("Gprojet", "Annuler", nullptr));
         lineEdit_4->setText(QCoreApplication::translate("Gprojet", "Recherche par status", nullptr));
         label_10->setText(QCoreApplication::translate("Gprojet", "Trier par", nullptr));
         comboBox_3->setItemText(0, QCoreApplication::translate("Gprojet", "Nom", nullptr));
         comboBox_3->setItemText(1, QCoreApplication::translate("Gprojet", "Date D\303\251but", nullptr));
 
         label_13->setText(QString());
-        label_11->setText(QString());
         label_12->setText(QString());
         label_3->setText(QCoreApplication::translate("Gprojet", "Nombre des projets mensuelle:", nullptr));
-        pushButton_7->setText(QCoreApplication::translate("Gprojet", "Consulter le menu", nullptr));
+        pushButton_7->setText(QCoreApplication::translate("Gprojet", "      Consulter le menu", nullptr));
         label_14->setText(QString());
-        label_18->setText(QString());
-        label_19->setText(QString());
-        label_17->setText(QString());
-        label_22->setText(QString());
+        supprimer_projet->setText(QString());
+        update_projet->setText(QString());
+        pushButton_3->setText(QString());
+        telecharger_projet->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Gprojet", "Gestion des projets", nullptr));
         label_15->setText(QString());
-        label_7->setText(QCoreApplication::translate("Gprojet", "Nom projet:", nullptr));
-        label_20->setText(QCoreApplication::translate("Gprojet", "Id_projet", nullptr));
-        label_21->setText(QString());
+        label_20->setText(QCoreApplication::translate("Gprojet", "Id_projet:", nullptr));
         label_16->setText(QCoreApplication::translate("Gprojet", "Des conseils g\303\251n\303\251r\303\251s avec l'IA", nullptr));
         pushButton_8->setText(QCoreApplication::translate("Gprojet", "G\303\251n\303\251rer ", nullptr));
-        label_29->setText(QCoreApplication::translate("Gprojet", "Date:", nullptr));
-        label_30->setText(QCoreApplication::translate("Gprojet", "Nom de l'employ\303\251:", nullptr));
-        label_31->setText(QCoreApplication::translate("Gprojet", "Les d\303\251tails de projet:", nullptr));
         label_28->setText(QCoreApplication::translate("Gprojet", "       Historique du projet           ", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("Gprojet", "    Historique", nullptr));
+        label_21->setText(QCoreApplication::translate("Gprojet", "Id_projet:", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Gprojet", "Gestion des m\303\251tiers", nullptr));
     } // retranslateUi
 

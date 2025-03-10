@@ -5,12 +5,13 @@
 #include <QApplication>
 #include "connection.h"
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Gprojet w;
     Connection c;
     bool test=c.createconnect();
+    Gprojet w;
     if(test)
     {w.show();
         QMessageBox::information(nullptr, QObject::tr("database is open"),
