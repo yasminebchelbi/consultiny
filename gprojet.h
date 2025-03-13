@@ -26,6 +26,8 @@ private slots:
     void on_update_projet_clicked();
 
     void on_annuler_projet_clicked();
+    void verifierSaisie();
+    void verifierChamps();
 
 private:
     Ui::Gprojet *ui;

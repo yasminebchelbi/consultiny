@@ -27,7 +27,7 @@
      <string notr="true">/* Style du QTabWidget */
 QTabWidget::pane {
     border: 1px solid ;
-    background-color:#dcdcda
+    background-color:#DCDCDA;
    
 }
 
@@ -47,12 +47,10 @@ QTabBar::tab:selected {
     background:  #DCDCDA;
     color: #263A69;
     font-weight: bold;
-}
-
-</string>
+}</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -311,6 +309,9 @@ QPlainTextEdit
          <height>28</height>
         </rect>
        </property>
+       <property name="maxLength">
+        <number>10</number>
+       </property>
       </widget>
       <widget class="QLineEdit" name="lineEdit_adresse">
        <property name="geometry">
@@ -511,8 +512,8 @@ QComboBox::down-arrow {
        <rect>
         <x>350</x>
         <y>270</y>
-        <width>531</width>
-        <height>181</height>
+        <width>491</width>
+        <height>241</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -596,10 +597,10 @@ QPushButton:hover {
      <widget class="QLabel" name="label_14">
       <property name="geometry">
        <rect>
-        <x>860</x>
-        <y>450</y>
-        <width>171</width>
-        <height>91</height>
+        <x>830</x>
+        <y>410</y>
+        <width>191</width>
+        <height>131</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -624,39 +625,65 @@ QPushButton:hover {
         <x>340</x>
         <y>70</y>
         <width>661</width>
-        <height>171</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">QTableView {
-    background-color: #EDECEA; /* Fond du tableau */
-    border: 2px solid #838DB1; /* Bordure subtile */
-    border-radius: 10px; /* Arrondi */
-    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */
-    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif; /* Typographie moderne */
-    font-size: 14px;
-    selection-background-color: #838DB1; /* Couleur de sélection */
-    selection-color: white; /* Texte en blanc sur sélection */
+       <string notr="true">/* Style global du tableau QTableView */
+QTableView {  
+    background-color: #EDECEA; /* Fond doux du tableau */
+    border: 2px solid #838DB1; /* Bordure subtile mais visible */
+    border-radius: 10px; /* Coins arrondis */
+    gridline-color: #2B0101; /* Lignes de grille en couleur sombre */
+    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif; /* Police moderne et professionnelle */
+    font-size: 14px; /* Taille de police standard */
+    selection-background-color: #838DB1; /* Couleur de fond lors de la sélection */
+    selection-color: white; /* Texte en blanc lors de la sélection */
+    alternate-background-color: #F5F5F5; /* Fond alternatif pour les lignes paires (lignes de table) */
 }
 
+/* Style des sections de l'en-tête */
 QHeaderView::section {
-    background-color: #263A69; /* En-têtes foncés */
-    color: white; /* Texte blanc */
-    padding: 8px;
-    border: none;
-    font-weight: bold;
-    border-radius: 5px;
+    background-color: #263A69; /* Fond sombre pour les en-têtes */
+    color: white; /* Texte blanc pour les en-têtes */
+    padding: 8px; /* Un peu d'espace autour du texte */
+    border: none; /* Suppression des bordures internes */
+    font-weight: bold; /* Texte en gras pour un meilleur contraste */
+    border-radius: 5px; /* Coins arrondis pour les en-têtes */
+    text-align: center; /* Centrage du texte */
 }
 
+/* Style des éléments dans le tableau (cellules) */
 QTableView::item {
-    padding: 6px;
-    border-bottom: 1px solid #E8E3DD; /* Séparation entre les lignes */
+    padding: 6px; /* Espacement interne dans les cellules */
+    border-bottom: 1px solid #E8E3DD; /* Légère séparation entre les lignes */
+    color: black; /* Texte noir dans les cellules */
+    background-color: transparent; /* Fond transparent pour une meilleure lisibilité */
 }
 
+/* Style des éléments sélectionnés dans le tableau */
 QTableView::item:selected {
-    background-color: #838DB1; /* Fond des éléments sélectionnés */
-    color: white;
-}</string>
+    background-color: #838DB1; /* Fond de sélection pour les éléments */
+    color: white; /* Texte en blanc lorsqu'une cellule est sélectionnée */
+}
+
+/* Effet de survol pour les éléments du tableau */
+QTableView::item:hover {
+    background-color: #D0D8E4; /* Fond plus clair lors du survol */
+    cursor: pointer; /* Curseur pointeur lors du survol */
+}
+
+/* Style pour les lignes alternées du tableau */
+QTableView::item:alternate {
+    background-color: #F7F7F7; /* Fond plus clair pour les lignes impaires */
+}
+
+/* Focus sur les en-têtes au survol */
+QHeaderView::section:hover {
+    background-color: #1C2D4B; /* Sombre mais plus visible au survol */
+    cursor: pointer; /* Curseur pointeur sur l'en-tête */
+}
+</string>
       </property>
      </widget>
      <widget class="QPushButton" name="supprimer_projet">

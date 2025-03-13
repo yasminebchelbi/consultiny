@@ -96,7 +96,7 @@ public:
         tabWidget->setStyleSheet(QString::fromUtf8("/* Style du QTabWidget */\n"
 "QTabWidget::pane {\n"
 "    border: 1px solid ;\n"
-"    background-color:#dcdcda\n"
+"    background-color:#DCDCDA;\n"
 "   \n"
 "}\n"
 "\n"
@@ -116,9 +116,7 @@ public:
 "    background:  #DCDCDA;\n"
 "    color: #263A69;\n"
 "    font-weight: bold;\n"
-"}\n"
-"\n"
-""));
+"}"));
         tab = new QWidget();
         tab->setObjectName("tab");
         frame = new QFrame(tab);
@@ -246,6 +244,7 @@ public:
         lineEdit_cout = new QLineEdit(frame);
         lineEdit_cout->setObjectName("lineEdit_cout");
         lineEdit_cout->setGeometry(QRect(120, 140, 181, 28));
+        lineEdit_cout->setMaxLength(10);
         lineEdit_adresse = new QLineEdit(frame);
         lineEdit_adresse->setObjectName("lineEdit_adresse");
         lineEdit_adresse->setGeometry(QRect(120, 170, 181, 28));
@@ -355,7 +354,7 @@ public:
         label_12->setGeometry(QRect(390, 370, 49, 16));
         frame_4 = new QFrame(tab);
         frame_4->setObjectName("frame_4");
-        frame_4->setGeometry(QRect(350, 270, 531, 181));
+        frame_4->setGeometry(QRect(350, 270, 491, 241));
         frame_4->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -401,7 +400,7 @@ public:
         pushButton_7->setIconSize(QSize(30, 30));
         label_14 = new QLabel(tab);
         label_14->setObjectName("label_14");
-        label_14->setGeometry(QRect(860, 450, 171, 91));
+        label_14->setGeometry(QRect(830, 410, 191, 131));
         label_14->setStyleSheet(QString::fromUtf8("QLabel#logoLabel {\n"
 "    border: none;\n"
 "    background: transparent;\n"
@@ -410,37 +409,64 @@ public:
         label_14->setScaledContents(true);
         tableView = new QTableView(tab);
         tableView->setObjectName("tableView");
-        tableView->setGeometry(QRect(340, 70, 661, 171));
-        tableView->setStyleSheet(QString::fromUtf8("QTableView {\n"
-"    background-color: #EDECEA; /* Fond du tableau */\n"
-"    border: 2px solid #838DB1; /* Bordure subtile */\n"
-"    border-radius: 10px; /* Arrondi */\n"
-"    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */\n"
-"    font-family: \"Segoe UI\", \"Arial\", sans-serif; /* Typographie moderne */\n"
-"    font-size: 14px;\n"
-"    selection-background-color: #838DB1; /* Couleur de s\303\251lection */\n"
-"    selection-color: white; /* Texte en blanc sur s\303\251lection */\n"
+        tableView->setGeometry(QRect(340, 70, 661, 191));
+        tableView->setStyleSheet(QString::fromUtf8("/* Style global du tableau QTableView */\n"
+"QTableView {  \n"
+"    background-color: #EDECEA; /* Fond doux du tableau */\n"
+"    border: 2px solid #838DB1; /* Bordure subtile mais visible */\n"
+"    border-radius: 10px; /* Coins arrondis */\n"
+"    gridline-color: #2B0101; /* Lignes de grille en couleur sombre */\n"
+"    font-family: \"Segoe UI\", \"Arial\", sans-serif; /* Police moderne et professionnelle */\n"
+"    font-size: 14px; /* Taille de police standard */\n"
+"    selection-background-color: #838DB1; /* Couleur de fond lors de la s\303\251lection */\n"
+"    selection-color: white; /* Texte en blanc lors de la s\303\251lection */\n"
+"    alternate-background-color: #F5F5F5; /* Fond alternatif pour les lignes paires (lignes de table) */\n"
 "}\n"
 "\n"
+"/* Style des sections de l'en-t\303\252te */\n"
 "QHeaderView::section {\n"
-"    background-color: #263A69; /* En-t\303\252tes fonc\303\251s */\n"
-"    color: white; /* Texte blanc */\n"
-"    padding: 8px;\n"
-"    border: none;\n"
-"    font-weight: bold;\n"
-"    border-radius: 5px;\n"
+"    background-color: #263A69; /* Fond sombre pour les en-t\303\252tes */\n"
+"    color: white; /* Texte blanc pour les en-t\303\252tes */\n"
+"    padding: 8px; /* Un peu d'espace"
+                        " autour du texte */\n"
+"    border: none; /* Suppression des bordures internes */\n"
+"    font-weight: bold; /* Texte en gras pour un meilleur contraste */\n"
+"    border-radius: 5px; /* Coins arrondis pour les en-t\303\252tes */\n"
+"    text-align: center; /* Centrage du texte */\n"
 "}\n"
 "\n"
+"/* Style des \303\251l\303\251ments dans le tableau (cellules) */\n"
 "QTableView::item {\n"
-"    padding: 6px;\n"
-"    border-bottom: 1px solid #E8E3DD; /* S\303\251paration entre les lignes */\n"
+"    padding: 6px; /* Espacement interne dans les cellules */\n"
+"    border-bottom: 1px solid #E8E3DD; /* L\303\251g\303\250re s\303\251paration entre les lignes */\n"
+"    color: black; /* Texte noir dans les cellules */\n"
+"    background-color: transparent; /* Fond transparent pour une meilleure lisibilit\303\251 */\n"
 "}\n"
 "\n"
+"/* Style des \303\251l\303\251ments s\303\251lectionn\303\251s dans le tableau */\n"
 "QTableView::item:selected {\n"
-"    background-color: #838DB1; /* Fond des \303\251l\303\251ments s\303\251lectionn\303\251"
-                        "s */\n"
-"    color: white;\n"
-"}"));
+"    background-color: #838DB1; /* Fond de s\303\251lection pour les \303\251l\303\251ments */\n"
+"    color: white; /* Texte en blanc lorsqu'une cellule est s\303\251lectionn\303\251"
+                        "e */\n"
+"}\n"
+"\n"
+"/* Effet de survol pour les \303\251l\303\251ments du tableau */\n"
+"QTableView::item:hover {\n"
+"    background-color: #D0D8E4; /* Fond plus clair lors du survol */\n"
+"    cursor: pointer; /* Curseur pointeur lors du survol */\n"
+"}\n"
+"\n"
+"/* Style pour les lignes altern\303\251es du tableau */\n"
+"QTableView::item:alternate {\n"
+"    background-color: #F7F7F7; /* Fond plus clair pour les lignes impaires */\n"
+"}\n"
+"\n"
+"/* Focus sur les en-t\303\252tes au survol */\n"
+"QHeaderView::section:hover {\n"
+"    background-color: #1C2D4B; /* Sombre mais plus visible au survol */\n"
+"    cursor: pointer; /* Curseur pointeur sur l'en-t\303\252te */\n"
+"}\n"
+""));
         supprimer_projet = new QPushButton(tab);
         supprimer_projet->setObjectName("supprimer_projet");
         supprimer_projet->setGeometry(QRect(760, 10, 61, 41));
@@ -873,7 +899,7 @@ public:
 
         retranslateUi(Gprojet);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         update_projet->setDefault(false);
 
 
