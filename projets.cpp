@@ -2,6 +2,9 @@
 #include<QSqlQuery>
 #include<QSqlTableModel>
 #include <QMessageBox>
+#include <QVector>
+#include <QSqlError>
+
 
 
 Projets::Projets(QString nom_projet, QDate date_debut, int budget_projet, QString secteur_projet, int cout_projet, QString adresse_projet, QString description_projet) {
@@ -90,4 +93,23 @@ bool Projets::update(int id_projet, QString nom_projet,QDate date_debut,QString 
     query.bindValue(":description_projet", description_projet);
     query.bindValue(":id_projet", id_projet);
     return query.exec();
+}
+
+QVector<int> Projets::statMensuelle() {
+    QVector<int> stats(12, 0); // Tableau pour stocker le nombre de projets par mois (de janvier à décembre)
+
+    QSqlQuery query;
+    query.prepare("SELECT strftime('%m', date_debut) AS mois, COUNT(*) FROM projet GROUP BY mois");
+
+    if (query.exec()) {
+        while (query.next()) {
+            int mois = query.value(0).toInt(); // Récupérer le numéro du mois
+            int count = query.value(1).toInt(); // Nombre de projets pour ce mois
+            stats[mois - 1] = count; // Stocker dans le tableau (mois - 1 car indexé à partir de 0)
+        }
+    } else {
+        qDebug() << "Erreur SQL:" << query.lastError().text();
+    }
+
+    return stats;
 }

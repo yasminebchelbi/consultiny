@@ -4,6 +4,34 @@
 #include<QMessageBox>
 #include<QInputDialog>
 #include<QRegularExpression>
+#include<QSortFilterProxyModel>
+#include <QSqlError>
+#include<QSqlQuery>
+#include <QSqlQueryModel>
+#include <QSqlRecord>
+#include <QTextDocument>
+#include <QPrinter>
+#include <QFileDialog>
+#include <QBarSet>
+#include <QBarSeries>
+#include <QChart>
+#include <QChartView>
+#include <QValueAxis>
+#include <QVBoxLayout>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <QStandardPaths>
+#include <QSqlQuery>
+#include <QDate>
+#include <QMessageBox>
+#include <QPieSeries>
+#include <QFrame>
+
+
+
+
+
 
 Gprojet::Gprojet(QWidget *parent)
     : QMainWindow(parent)
@@ -28,6 +56,10 @@ Gprojet::Gprojet(QWidget *parent)
         connect(ui->plainTextEdit_description, &QPlainTextEdit::textChanged, this, &Gprojet::verifierSaisie);
         connect(ui->dateTimeEdit, &QDateTimeEdit::dateChanged, this, &Gprojet::verifierSaisie);
 
+        exporterProjetsTexte();
+        afficherStatistiquesStatus() ;
+
+
 }
 
 
@@ -35,7 +67,7 @@ Gprojet::~Gprojet()
 {
     delete ui;
 }
-
+//****************************************Controle de saisie****************************************************************
 void Gprojet::verifierChamps()
 {
     bool nomValide = !ui->lineEdit_nom->text().trimmed().isEmpty();
@@ -150,7 +182,6 @@ void Gprojet::on_ajouter_projet_clicked()
     if (test)
     {
         ui->tableView->setModel(P.afficher());
-        ui->tableView->resizeColumnsToContents();
         QMessageBox::information(nullptr, QObject::tr("Succès"),
                                  QObject::tr("Ajout effectué !\nCliquez sur OK pour continuer."),
                                  QMessageBox::Ok);
@@ -162,21 +193,6 @@ void Gprojet::on_ajouter_projet_clicked()
                               QMessageBox::Ok);
     }
 
-
-
-    if (test)
-    {
-        ui->tableView->setModel(P.afficher());
-        QMessageBox::information(nullptr, QObject::tr("Succès"),
-                                 QObject::tr("Ajout effectué !\nCliquez sur OK pour continuer."),
-                                 QMessageBox::Ok);
-    }
-    else
-    {
-        QMessageBox::critical(nullptr, QObject::tr("Échec"),
-                              QObject::tr("Ajout non effectué !\nVérifiez vos données et réessayez."),
-                              QMessageBox::Ok);
-    }
 }
 //***********************************la suppression du projet************************************************************
 
@@ -250,10 +266,6 @@ void Gprojet::on_update_projet_clicked()
             QMessageBox::warning(this, tr("Erreur"), tr("Veuillez remplir tous les champs avant de mettre à jour."));
             return;
         }
-        if (nom_projet.isEmpty() || secteur_projet.isEmpty() || status_projet.isEmpty() || description_projet.isEmpty()) {
-            QMessageBox::warning(this, tr("Erreur"), tr("Veuillez remplir tous les champs avant de mettre à jour."));
-            return;
-        }
 
         // Vérification du budget et du coût
         if (budget_projet <= 0 || cout_projet < 0) {
@@ -271,10 +283,35 @@ void Gprojet::on_update_projet_clicked()
         QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Confirmation"),
                                                                   tr("Voulez-vous enregistrer les modifications ?"),
                                                                   QMessageBox::Yes | QMessageBox::No);
+
         if (reply == QMessageBox::Yes) {
             // Mettre à jour la base de données
-            Projets P;
             if (P.update(id_projet, nom_projet, date_debut, status_projet, secteur_projet, budget_projet, cout_projet, description_projet)) {
+
+                QSqlQuery query;
+                QString date_modif = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                QString modification = "Projet mis à jour (Nom: " + nom_projet +
+                                       ", Date: " + date_debut.toString("yyyy-MM-dd") +
+                                       ", Secteur: " + secteur_projet +
+                                       ", Statut: " + status_projet +
+                                       ", Budget: " + QString::number(budget_projet) +
+                                       ", Coût: " + QString::number(cout_projet) +
+                                       ", Adresse: " + adresse_projet +
+                                       ", Description: " + description_projet +")";
+
+
+
+
+                query.prepare("INSERT INTO historique (id_projet, date_modif, modification) "
+                              "VALUES (:id_projet, :date_modif, :modification)");
+                query.bindValue(":id_projet", id_projet);
+                query.bindValue(":date_modif", date_modif);
+                query.bindValue(":modification", modification);
+
+                if (!query.exec()) {
+                    qDebug() << "Erreur insertion historique : " << query.lastError().text();
+                }
+
                 QMessageBox::information(this, tr("Succès"), tr("Projet mis à jour avec succès."));
             } else {
                 QMessageBox::critical(this, tr("Erreur"), tr("Échec de la mise à jour du projet."));
@@ -285,15 +322,331 @@ void Gprojet::on_update_projet_clicked()
         }
     }
 
+
 void Gprojet::on_annuler_projet_clicked()
 {
-        ui->lineEdit_nom->clear();
-        ui->dateTimeEdit->clear();
-        ui->lineEdit_budget->clear();
-        ui->lineEdit_adresse->clear();
-        ui->lineEdit_secteur->clear();
-        ui->plainTextEdit_description->clear();
-        ui->lineEdit_cout->clear();
+    ui->lineEdit_nom->clear();
+    ui->dateTimeEdit->setDateTime(QDateTime());  // Correction
+    ui->lineEdit_budget->clear();
+    ui->lineEdit_adresse->clear();
+    ui->lineEdit_secteur->clear();
+    ui->plainTextEdit_description->clear();
+    ui->lineEdit_cout->clear();
+}
 
+
+
+//*********************************************fonction trier**************************************************************
+void Gprojet::on_trier_projet_2_clicked()
+{
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable("PROJET");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date Début"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Budget"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Secteur"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Statut"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Coût"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("Adresse"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("Description"));
+
+
+   // ui->tableView->setColumnHidden(9, true);
+
+    if (ui->trier_projet->currentText() == "Nom") {
+        model->setSort(1, Qt::AscendingOrder);  // Tri par "Nom"
+    }
+    else if (ui->trier_projet->currentText() == "Date début") {
+        model->setSort(2, Qt::AscendingOrder);  // Tri par "Date début"
+    }
+
+    model->select();
+
+    if (model->lastError().isValid()) {
+        qDebug() << "Erreur dans la requête SQL: " << model->lastError().text();
+        QMessageBox::warning(this, tr("Erreur SQL"), tr("Une erreur est survenue lors de l'exécution de la requête."));
+        ui->tableView->setModel(nullptr);
+    } else {
+        ui->tableView->setModel(model);
+        ui->tableView->setColumnHidden(9, true);
+    }
+}
+//********************************************************fonction de recherche********************************************
+
+void Gprojet::on_recherche_projet_2_clicked()
+{
+    QString statut = ui->recherche_projet->text(); // Récupérer le statut entré par l'utilisateur
+
+    if (statut.isEmpty()) {
+        QMessageBox::warning(this, "Recherche", "Veuillez entrer un statut !");
+        return;
+    }
+
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(P.afficher()); // Associer le modèle des projets
+
+    proxyModel->setFilterKeyColumn(P.afficher()->fieldIndex("statut")); // Filtrer par statut
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive); // Ignorer la casse
+    proxyModel->setFilterFixedString(statut); // Appliquer le filtre
+
+    ui->tableView->setModel(proxyModel); // Afficher les résultats filtrés
+}
+//************************************************fonction du telechargement pdf*******************************************
+void Gprojet::on_telecharger_projet_clicked()
+{
+    // Vérifier si une ligne est sélectionnée
+    QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
+    if (selection.isEmpty()) {
+        QMessageBox::warning(this, "Facture", "Veuillez sélectionner un projet !");
+        return;
+    }
+
+    // Récupérer l'index de la ligne sélectionnée
+    int selectedRow = selection.first().row();
+    QAbstractItemModel *model = ui->tableView->model();
+
+    // Récupérer les valeurs du projet sélectionné
+    QString id_projet = model->data(model->index(selectedRow, 0)).toString();
+    QString nom = model->data(model->index(selectedRow, 1)).toString();
+    QString date_debut = model->data(model->index(selectedRow, 2)).toString();
+    QString budget = model->data(model->index(selectedRow, 3)).toString();
+    QString secteur = model->data(model->index(selectedRow, 4)).toString();
+    QString statut = model->data(model->index(selectedRow, 5)).toString();
+    QString cout = model->data(model->index(selectedRow, 6)).toString();
+    QString adresse = model->data(model->index(selectedRow, 7)).toString();
+    QString description = model->data(model->index(selectedRow, 8)).toString();
+
+    // Génération du HTML pour la facture
+    QString html = "<html><head>"
+                   "<style>"
+                   "body { font-family: Arial, sans-serif; padding: 20px; }"
+                   "h1 { text-align: center; color:#6f7dab; }"
+                   "table { width: 100%; border-collapse: collapse; margin-top: 20px; }"
+                   "th, td { padding: 10px; text-align: left; border: 1px solid black; }"
+                   "th { background-color: #6f7dab; color: white; }"
+                   "td { background-color: #f9f9f9; }"
+                   ".footer { text-align: center; margin-top: 20px; font-style: italic; }"
+                   ".logo { text-align: center; margin-bottom: 10px; }"
+                   "</style></head><body>";
+    html += "<h1 style='text-align: center;'>Facture du Projet</h1>";
+    html += "<div class='logo'><img src='file:///C:/2eme/sem2/projetc++/gclient%20interface/Gprojet/image/logo.jfif' width='150'></div>";
+    html += "<style> .table-container { margin-bottom: 30px; } </style>";
+    html += "<div class='table-container'>";
+    html += "<table>";
+    html += "<tr><th>Id projet</th><td>" + id_projet + "</td></tr>";
+    html += "<tr><th>Nom projet</th><td>" + nom + "</td></tr>";
+    html += "<tr><th>Date de Début</th><td>" + date_debut + "</td></tr>";
+    html += "<tr><th>Budget projet</th><td>" + budget + " DT</td></tr>";
+    html += "<tr><th>Secteur projet</th><td>" + secteur + "</td></tr>";
+    html += "<tr><th>Statut projet</th><td>" + statut + "</td></tr>";
+    html += "<tr><th>Coût projet</th><td>" + cout + " DT</td></tr>";
+    html += "<tr><th>Adresse projet</th><td>" + adresse + "</td></tr>";
+    html += "<tr><th>Description projet</th><td>" + description + "</td></tr>";
+    html += "</table>";
+    html += "</div>";
+    html += "<h4>Bienvenue cher client, nous sommes ravis de vous accompagner dans la gestion de votre projet !</h4>";
+    html += "<div class='footer'>Fait par <b>Consultiny</b> - Votre partenaire en consulting</div>";
+    html += "<br><br><p style='text-align: right;'>Signature du Responsable</p>";
+    html += "</body></html>";
+
+
+    // Demander où enregistrer le PDF
+    QString filePath = QFileDialog::getSaveFileName(this, "Enregistrer la Facture", "", "PDF Files (*.pdf)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    // Création du document PDF
+    QTextDocument document;
+    document.setHtml(html);
+
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(filePath);
+
+    document.print(&printer);
+
+    QMessageBox::information(this, "Facture", "La facture a été générée avec succès !");
+}
+//*******************************************fonction des statistiques***************************************************
+void Gprojet::afficherStatistiquesStatus() {
+    // Créer un QPieSeries pour les statistiques
+    QPieSeries *series = new QPieSeries();
+
+    // Requête SQL pour récupérer les statistiques de statut de projet
+    QSqlQuery query;
+    query.prepare("SELECT status_projet, COUNT(*) FROM projet GROUP BY status_projet");
+
+    if (!query.exec()) {
+        QMessageBox::critical(nullptr, "Erreur SQL", "Erreur lors de l'exécution de la requête : " + query.lastError().text());
+        return;
+    }
+
+    // Ajouter des données à la série pie en fonction des résultats de la requête
+    while (query.next()) {
+        QString status = query.value(0).toString();
+        int count = query.value(1).toInt();
+
+        // Ajouter un secteur au graphique pour chaque statut
+        series->append(status, count);
+    }
+
+    // Créer le graphique
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Répartition des projets par statut");
+
+    // Créer un QChartView pour afficher le graphique
+    QChartView *view = new QChartView(chart);
+    view->setRenderHint(QPainter::Antialiasing);
+
+    // Rendre le graphique dynamique en l'ajoutant à une QFrame
+    QVBoxLayout *layout = new QVBoxLayout(ui->frame_stat);  // ui->frame_stat est votre QFrame
+    layout->addWidget(view);
+    ui->frame_stat->setLayout(layout);
+}
+//****************************le timer pour fiare les mise a jour des stat chaque 5ms*************************************
+void Gprojet::startStatistiquesTimer() {
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Gprojet::afficherStatistiquesStatus);
+    timer->start(5000);  // 5000 ms = 5 secondes
+}
+
+
+//****************************stockage des projets dans un fichier texte****************************************************
+
+void Gprojet::exporterProjetsTexte() {
+    // 1️⃣ Définir le chemin du fichier sur le Bureau
+    QString filePath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/Historique.txt";
+
+    // 2️⃣ Vérifier si le chemin est valide
+    if (filePath.isEmpty()) {
+        QMessageBox::critical(nullptr, "Erreur", "Impossible d'obtenir l'emplacement du fichier !");
+        return;
+    }
+
+    QFile file(filePath);
+
+    // 3️⃣ Vérifier si le fichier peut être ouvert en écriture
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::critical(nullptr, "Erreur", "Impossible de créer le fichier : " + file.errorString());
+        return;
+    }
+
+    QTextStream out(&file);
+    QSqlQuery query;
+    query.prepare("SELECT nom_projet, date_debut, secteur_projet, status_projet FROM projet");
+
+    // 5️⃣ Vérifier si la requête a été exécutée avec succès
+    if (!query.exec()) {
+        QMessageBox::critical(nullptr, "Erreur SQL", "Erreur lors de l'exécution de la requête : " + query.lastError().text());
+        file.close();
+        return;
+    }
+
+    // 6️⃣ Vérifier s'il y a des résultats avant de commencer à écrire dans le fichier
+    if (!query.next()) {
+        QMessageBox::information(nullptr, "Aucun Projet", "Aucun projet trouvé dans la base de données.");
+        file.close();
+        return;
+    }
+
+    out << "Nom du Projet || Secteur ||  Date début || Status  \n";
+    out << "----------------------------------------------------------\n";
+
+    // 8️⃣ Parcourir les résultats de la requête et écrire les données dans le fichier
+    do {
+        QString nom_projet = query.value(0).toString();
+        QDate date_debut = query.value(1).toDate();
+        QString secteur_projet = query.value(2).toString();
+        QString status_projet = query.value(3).toString();
+
+        // Écrire une ligne dans le fichier
+        out  << nom_projet << " || " << secteur_projet<< " || " << date_debut.toString("dd/MM/yyyy") <<"||"<<status_projet<< "\n";
+    } while (query.next());  // Passer à la prochaine ligne dans la base de données
+
+    file.close();
+    QMessageBox::information(nullptr, "Succès", "Le fichier projets.txt a été créé avec succès !\n\n Emplacement : " + filePath);
+}
+//******************************************pour afficher l'historique des modifcations ***********************************
+void Gprojet::on_hist_projet_clicked()
+{
+    QString idText = ui->id_hist_projet->text();
+    if (idText.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur"), tr("Veuillez entrer l'ID du projet."));
+        return;
+    }
+
+    bool ok;
+    int id_projet = idText.toInt(&ok);
+    if (!ok || id_projet <= 0) {
+        QMessageBox::warning(this, tr("Erreur"), tr("ID du projet invalide."));
+        return;
+    }
+
+    qDebug() << "ID du projet : " << id_projet;
+
+    QSqlQuery query;
+    query.prepare("SELECT date_modif, modification FROM historique WHERE id_projet = :id_projet ORDER BY date_modif DESC");
+    query.bindValue(":id_projet", id_projet);
+    qDebug() << "Requête SQL : " << query.executedQuery();
+
+    QString historiqueHTML;
+
+    if (query.exec()) {
+        while (query.next()) {
+            QString date_modif = query.value(0).toDateTime().toString("dd/MM/yyyy hh:mm:ss");
+            QString modification = query.value(1).toString();
+
+            // Mise en forme personnalisée
+            QString modifStyled = colorizeModification(modification);
+
+            historiqueHTML += "<p><span style='color:#000000; font-weight:bold;'>[" + date_modif + "]</span> "
+                              + modifStyled + "</p><hr>";
+        }
+
+        if (historiqueHTML.isEmpty()) {
+            historiqueHTML = "<p style='color:#888;'>Aucune modification enregistrée pour ce projet.</p>";
+        }
+
+        // Affichage stylisé dans QTextEdit
+        ui->historique_projet->setHtml(historiqueHTML);
+    } else {
+        QMessageBox::critical(this, tr("Erreur"), tr("Erreur lors de la récupération de l'historique."));
+        qDebug() << "Erreur SQL : " << query.lastError().text();
+    }
+}
+QString Gprojet::colorizeModification(const QString& text)
+{
+    QString modif = text;
+
+    // Expression régulière pour détecter : quelque chose "changé de 'X' à 'Y'"
+    QRegularExpression regex(R"((\b\w+\b\s+changé\s+de\s+'.+?'\s+à\s+'.+?'))",
+                             QRegularExpression::CaseInsensitiveOption);
+
+    // Remplacement des correspondances par la même phrase colorée
+    return modif.replace(regex, "<span style='color:#007ACC;'>\\1</span>");
+}
+
+//***************************************bouton annuler des conseils*****************************************************
+void Gprojet::on_annuler_conseil_projet_clicked()
+{
+     ui->conseil_ai_projet->clear();
+     ui->id_ai_projet->clear();
+}
+
+//**************************************bouton annuler les historiques***************************************************
+void Gprojet::on_anuuler_hist_clicked()
+{
+    ui->historique_projet->clear();
+    ui->id_hist_projet->clear();
+}
+
+
+void Gprojet::on_refresh_projet_clicked()
+{
+    ui->tableView->setModel(P.afficher());
 }
 
