@@ -11,13 +11,7 @@ bool Connection::createconnect()
     db.setDatabaseName("Source_Projet2A");//inserer le nom de la source de données
     db.setUserName("novus");//inserer nom de l'utilisateur
     db.setPassword("dhia2005");//inserer mot de passe de cet utilisateur
-
     if (db.open())
         test=true;
-
-
-
-
-
     return  test;
 }

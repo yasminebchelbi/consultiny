@@ -161,7 +161,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>20</y>
+         <y>30</y>
          <width>81</width>
          <height>21</height>
         </rect>
@@ -177,7 +177,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>60</y>
+         <y>80</y>
          <width>63</width>
          <height>20</height>
         </rect>
@@ -190,7 +190,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>100</y>
+         <y>130</y>
          <width>101</width>
          <height>20</height>
         </rect>
@@ -203,7 +203,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>140</y>
+         <y>170</y>
          <width>81</width>
          <height>20</height>
         </rect>
@@ -216,7 +216,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>250</y>
+         <y>330</y>
          <width>201</width>
          <height>31</height>
         </rect>
@@ -229,7 +229,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>180</y>
+         <y>230</y>
          <width>81</width>
          <height>20</height>
         </rect>
@@ -242,7 +242,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>210</y>
+         <y>270</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -255,7 +255,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>210</y>
+         <y>270</y>
          <width>81</width>
          <height>29</height>
         </rect>
@@ -265,7 +265,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>90</y>
+         <y>120</y>
          <width>194</width>
          <height>29</height>
         </rect>
@@ -275,7 +275,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>130</y>
+         <y>160</y>
          <width>194</width>
          <height>29</height>
         </rect>
@@ -285,7 +285,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>10</y>
+         <y>20</y>
          <width>191</width>
          <height>28</height>
         </rect>
@@ -295,7 +295,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>50</y>
+         <y>70</y>
          <width>191</width>
          <height>28</height>
         </rect>
@@ -305,7 +305,7 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>170</y>
+         <y>230</y>
          <width>191</width>
          <height>28</height>
         </rect>
@@ -351,19 +351,19 @@ QPlainTextEdit
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>290</y>
+         <y>370</y>
          <width>291</width>
-         <height>241</height>
+         <height>161</height>
         </rect>
        </property>
       </widget>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="id_evenement_recherche">
       <property name="geometry">
        <rect>
         <x>340</x>
         <y>10</y>
-        <width>251</width>
+        <width>121</width>
         <height>41</height>
        </rect>
       </property>
@@ -412,50 +412,12 @@ QLineEdit::placeholder {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="QComboBox" name="critere_evenements">
       <property name="geometry">
        <rect>
-        <x>830</x>
-        <y>10</y>
-        <width>91</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    font-family: Arial, sans-serif;  /* Police élégante */
-    font-size: 12px;                 /* Taille du texte */
-    font-weight: bold;               /* Texte en gras */
-    color: #4B4B4B;                  /* Couleur du texte */
-    background-color: #E8E3DD;       /* Fond doux */
-    padding: 8px 9px;              /* Espacement interne */
-    border-radius: 5px;              /* Coins arrondis */
-    text-align: center;              /* Centrer le texte */
-    margin: 8px;                    /* Espacement externe */
-    border: 2px solid #D1C8B9;       /* Bordure douce */
-}
-
-QLabel:hover {
-    background-color: #D1C8B9;       /* Fond plus foncé au survol */
-    border: 2px solid #A89F92;       /* Bordure changeante */
-}
-
-QLabel:disabled {
-    color: #A0A0A0;                  /* Couleur du texte désactivé */
-    background-color: #F0F0F0;       /* Fond plus clair quand désactivé */
-    border: 2px solid #A0A0A0;       /* Bordure désactivée */
-}</string>
-      </property>
-      <property name="text">
-       <string>Trier par</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox_3">
-      <property name="geometry">
-       <rect>
-        <x>921</x>
+        <x>901</x>
         <y>20</y>
-        <width>91</width>
+        <width>111</width>
         <height>28</height>
        </rect>
       </property>
@@ -471,29 +433,59 @@ QLabel:disabled {
 }
 
 QComboBox:hover {
-    border: 2px solid #D1C8B9; /* Changement de couleur au survol */
+    border: 2px solid #D1C8B9;
 }
 
 QComboBox:focus {
-    border: 2px solid #A89F92; /* Bordure plus foncée au focus */
+    border: 2px solid #A89F92;
 }
 
 QComboBox QAbstractItemView {
-    background-color: #FFF; /* Couleur de fond du menu déroulant */
+    background-color: #FFFFFF; /* Fond bien visible */
     border: 2px solid #D1C8B9;
     border-radius: 10px;
-    selection-background-color: #D1C8B9; /* Couleur de sélection des éléments */
-    selection-color: #4B4B4B; /* Couleur du texte sélectionné */
+    selection-background-color: #D1C8B9;
+    selection-color: #4B4B4B;
+    color: #4B4B4B; /* Couleur du texte des items */
+    font-size: 14px;
+    font-weight: normal;
+    outline: none; /* Évite le contour noir moche parfois */
+}
+
+QComboBox QListView::item {
+    padding: 8px 12px; /* Espace autour du texte pour lisibilité */
 }
 
 QComboBox::down-arrow {
-    image: url(:/images/arrow.png); /* Icône de flèche personnalisée */
     width: 20px;
     height: 20px;
-}</string>
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left: 1px solid #D1C8B9;
+}
+</string>
       </property>
+      <item>
+       <property name="text">
+        <string>date </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>nombre participants</string>
+       </property>
+      </item>
      </widget>
-     <widget class="QFrame" name="frame_3">
+     <widget class="QFrame" name="stat_evenement">
       <property name="geometry">
        <rect>
         <x>340</x>
@@ -538,19 +530,6 @@ QLineEdit {
       <property name="frameShadow">
        <enum>QFrame::Shadow::Raised</enum>
       </property>
-      <widget class="QLabel" name="label_14">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>381</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>nombres d’événements par type</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
@@ -599,10 +578,10 @@ QLineEdit {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="rechercher_evenement">
       <property name="geometry">
        <rect>
-        <x>600</x>
+        <x>470</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -662,7 +641,7 @@ QPushButton:hover::icon {
      <widget class="QPushButton" name="telecharger_evenement">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>720</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -710,7 +689,7 @@ QPushButton:pressed {
      <widget class="QPushButton" name="update_evenement">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>670</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -758,7 +737,7 @@ QPushButton:pressed {
      <widget class="QPushButton" name="supprimer_evenement">
       <property name="geometry">
        <rect>
-        <x>780</x>
+        <x>770</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -843,6 +822,91 @@ QTableView::item:selected {
     color: black; /* Texte noir sur sélection */
 }
 </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="trier_evenements">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>10</y>
+        <width>91</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    font-family: Arial, sans-serif;  /* Police élégante */
+    font-size: 12px;                 /* Taille du texte */
+    font-weight: bold;               /* Texte en gras */
+    color: #4B4B4B;                  /* Couleur du texte */
+    background-color: #E8E3DD;       /* Fond doux */
+    padding: 8px 9px;              /* Espacement interne */
+    border-radius: 5px;              /* Coins arrondis */
+    text-align: center;              /* Centrer le texte */
+    margin: 8px;                    /* Espacement externe */
+    border: 2px solid #D1C8B9;       /* Bordure douce */
+}
+
+QPushButton:hover {
+    background-color: #D1C8B9;       /* Fond plus foncé au survol */
+    border: 2px solid #A89F92;       /* Bordure changeante */
+}
+
+QPushButton:disabled {
+    color: #A0A0A0;                  /* Couleur du texte désactivé */
+    background-color: #F0F0F0;       /* Fond plus clair quand désactivé */
+    border: 2px solid #A0A0A0;       /* Bordure désactivée */
+}</string>
+      </property>
+      <property name="text">
+       <string>Trier par</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="refrech_evenements">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>10</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #0daa90, stop:1 #388E3C); /* Dégradé de vert */
+    border: 2px solid #388E3C;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #388E3C, stop:1 #4CAF50); /* Inversion du dégradé */
+    border: 2px solid #4CAF50;
+}
+
+QPushButton:pressed {
+    background-color: #2E7D32; /* Couleur plus foncée au clic */
+    border: 2px solid #2E7D32;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset theme="QIcon::ThemeIcon::ViewRestore"/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
       </property>
      </widget>
     </widget>

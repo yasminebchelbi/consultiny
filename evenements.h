@@ -5,7 +5,10 @@
 #include <QDate>
 #include <QSqlQuery>
 #include <QSqlTableModel>
-
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSlice>
+//using namespace QtCharts;
 class Evenements
 {
 private:
@@ -50,6 +53,16 @@ public:
     QSqlTableModel * afficher_evenements();
     bool supprimer_evenements(int ID_evenement);
     bool modifier_evenement(int id, QString nom, QDate date_debut, QDate date_fin, int nbr_participants, QString adresse, QString description, QString type);
+
+    // metiers avancées
+
+    void telecharger_pdf_evenements();
+    QMap<QString, int> stat_evenements();
+    QSqlQueryModel* recherche_evenements(int);
+    //QSqlQueryModel* filtrer_evenements(const QString& , const QVariant& );
+    QSqlQueryModel* trier_evenements(const QString& );
+
+
 };
 
 #endif // EVENEMENTS_H

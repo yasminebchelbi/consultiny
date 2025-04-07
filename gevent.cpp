@@ -1,9 +1,18 @@
 #include "gevent.h"
+#include "evenements.h"//**
 #include "ui_gevent.h"
 #include <QMessageBox>
 #include <qtimer.h>
 #include "evenements.h"
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QPieSeries>
+//#include <QtCharts>
+#include <QVBoxLayout>
+//#include <QtCore>
 
+//using namespace QtCharts;
 
 Gevent::Gevent(QWidget *parent)
     : QMainWindow(parent)
@@ -11,10 +20,28 @@ Gevent::Gevent(QWidget *parent)
 {
     ui->setupUi(this);
     //qDebug() << "Initialisation de l'affichage des événements...";
-    //force l'actualisation après un petit délai blha mamche
+    //force l'actualisation après un petit délai
     QTimer::singleShot(500, this, [=](){
         ui->tableView->setModel(etmp.afficher_evenements());
+        afficherStatistiques_evenements();
+
     });
+
+
+
+
+    qDebug() << "Drivers SQL disponibles :" << QSqlDatabase::drivers();
+
+    connect(ui->nom, &QLineEdit::textChanged, this, &Gevent::verifierNom);
+    connect(ui->date_debut, &QDateEdit::dateChanged, this, &Gevent::verifierDates);
+    connect(ui->date_fin, &QDateEdit::dateChanged, this, &Gevent::verifierDates);
+    connect(ui->nbr_participants, &QSpinBox::textChanged, this, &Gevent::verifierParticipants);
+    connect(ui->lieu, &QLineEdit::textChanged, this, &Gevent::verifierLieu);
+    connect(ui->description, &QPlainTextEdit::textChanged, this, &Gevent::verifierDescription);
+    connect(ui->type, &QComboBox::currentTextChanged, this, &Gevent::verifierType);
+    verifierFormulaire(); // Vérification initiale
+
+
 
 }
 
@@ -22,56 +49,101 @@ Gevent::~Gevent()
 {
     delete ui;
 }
+//***************controle saisie**************************************************************************************************************
+void Gevent::verifierNom() {
+    QString nom = ui->nom->text().trimmed();
+    if (nom.isEmpty() || nom.length() < 3)
+        ui->nom->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    else
+        ui->nom->setStyleSheet(""); // Rétablir le style normal
+}
 
-void Gevent::on_ajouter_evenement_clicked()
-{
+void Gevent::verifierDates() {
+    QDate debut = ui->date_debut->date();
+    QDate fin = ui->date_fin->date();
+    if (debut >= fin) {
+        ui->date_debut->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+        ui->date_fin->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    } else {
+        ui->date_debut->setStyleSheet("");
+        ui->date_fin->setStyleSheet("");
+    }
+}
+
+void Gevent::verifierParticipants() {
+    int participants = ui->nbr_participants->value();
+
+    if (participants <= 1)
+        ui->nbr_participants->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    else
+        ui->nbr_participants->setStyleSheet("");
+}
+
+
+void Gevent::verifierLieu() {
+    QString lieu = ui->lieu->text().trimmed();
+    if (lieu.isEmpty() || lieu.length() < 5)
+        ui->lieu->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    else
+        ui->lieu->setStyleSheet("");
+}
+
+void Gevent::verifierDescription() {
+    QString description = ui->description->toPlainText().trimmed();
+    if (description.isEmpty() || description.length() < 10)
+        ui->description->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    else
+        ui->description->setStyleSheet("");
+}
+
+void Gevent::verifierType() {
+    QString type = ui->type->currentText().trimmed();
+    if (type.isEmpty())
+        ui->type->setStyleSheet("border: 2px solid red; border-radius: 5px;");
+    else
+        ui->type->setStyleSheet("");
+}
+void Gevent::verifierFormulaire() {
+    bool valide =
+        !ui->nom->styleSheet().contains("red") &&
+        !ui->date_debut->styleSheet().contains("red") &&
+        !ui->date_fin->styleSheet().contains("red") &&
+        !ui->nbr_participants->styleSheet().contains("red") &&
+        !ui->lieu->styleSheet().contains("red") &&
+        !ui->description->styleSheet().contains("red"); //&&
+        //!ui->type->styleSheet().contains("red");
+
+    ui->ajouter_evenement->setEnabled(valide);
+}
+
+//***********************************************************************************************************************************
+
+void Gevent::on_ajouter_evenement_clicked() {
+
+    // Vérification finale avant l'ajout
+    verifierFormulaire();
+    if (!ui->ajouter_evenement->isEnabled()) {
+        QMessageBox::warning(this, "Erreur de saisie", "Veuillez corriger les erreurs avant d'ajouter.");
+        return;
+    }
+
     QString nom_evenement = ui->nom->text().trimmed();
     QDate date_debut_evenement = ui->date_debut->date();
     QDate date_fin_evenement = ui->date_fin->date();
-    int nbr_participants_evenement = ui->nbr_participants->text().toInt();
+    int nbr_participants_evenement = ui->nbr_participants->value();
     QString adresse_evenement = ui->lieu->text().trimmed();
     QString description_evenement = ui->description->toPlainText().trimmed();
     QString type_evenement = ui->type->currentText().trimmed();
 
-    // Vérifications des champs
-    if (nom_evenement.isEmpty() || nom_evenement.length() < 3) {
-        QMessageBox::warning(this, "Erreur de saisie", "Le nom de l'événement doit contenir au moins 3 caractères.");
-        return;
-    }
-    if (date_debut_evenement > date_fin_evenement) {
-        QMessageBox::warning(this, "Erreur de saisie", "La date de début ne peut pas être après la date de fin.");
-        return;
-    }
-    if (nbr_participants_evenement <= 0) {
-        QMessageBox::warning(this, "Erreur de saisie", "Le nombre de participants doit être supérieur à 0.");
-        return;
-    }
-    if (adresse_evenement.isEmpty() || adresse_evenement.length() < 5) {
-        QMessageBox::warning(this, "Erreur de saisie", "L'adresse doit contenir au moins 5 caractères.");
-        return;
-    }
-    if (description_evenement.isEmpty() || description_evenement.length() < 10) {
-        QMessageBox::warning(this, "Erreur de saisie", "La description doit contenir au moins 10 caractères.");
-        return;
-    }
-    if (type_evenement.isEmpty()) {
-        QMessageBox::warning(this, "Erreur de saisie", "Veuillez sélectionner un type d'événement.");
-        return;
-    }
+    Evenements E(nom_evenement, date_debut_evenement, date_fin_evenement, nbr_participants_evenement, adresse_evenement,  description_evenement, type_evenement);
 
-    // Création de l'objet événement après validation
-    Evenements E(nom_evenement, date_debut_evenement, date_fin_evenement, nbr_participants_evenement, adresse_evenement, type_evenement, description_evenement);
-
-    bool test = E.ajouter_evenements();
-
-    if (test) {
-        // Actualisation de la table
+    if (E.ajouter_evenements()) {
         ui->tableView->setModel(E.afficher_evenements());
         ui->tableView->resizeColumnsToContents();
-
+        afficherStatistiques_evenements();
         QMessageBox::information(this, "Succès", "Ajout effectué avec succès !");
     } else {
-        QMessageBox::critical(this, "Échec", "Ajout non effectué ! Vérifiez vos données et réessayez.");
+        QMessageBox::critical(this, "Échec", "Ajout non effectué !");
     }
 }
 
@@ -100,6 +172,9 @@ void Gevent::on_supprimer_evenement_clicked()
         if (E.supprimer_evenements(id_evenement)) {
             // actualisation
             ui->tableView->setModel(E.afficher_evenements());
+
+            afficherStatistiques_evenements();
+
             QMessageBox::information(this, tr("Succès"), tr("evenement supprimé avec succès."));
         } else {
             QMessageBox::critical(this, tr("Échec"), tr("Échec de la suppression du evenement."));
@@ -136,7 +211,7 @@ void Gevent::on_update_evenement_clicked()
     QString description_evenement = ui->tableView->model()->data(ui->tableView->model()->index(row, 6)).toString().trimmed();
     QString type_evenement = ui->tableView->model()->data(ui->tableView->model()->index(row, 7)).toString().trimmed();
 
-    // Vérification des champs obligatoires et validation des données
+    // controle de saisie
     if (nom_evenement.isEmpty() || nom_evenement.length() < 3) {
         QMessageBox::warning(this, "Erreur de saisie", "Le nom de l'événement doit contenir au moins 3 caractères.");
         return;
@@ -153,10 +228,7 @@ void Gevent::on_update_evenement_clicked()
         QMessageBox::warning(this, "Erreur de saisie", "L'adresse doit contenir au moins 5 caractères.");
         return;
     }
-    if (description_evenement.isEmpty() || description_evenement.length() < 10) {
-        QMessageBox::warning(this, "Erreur de saisie", "La description doit contenir au moins 10 caractères.");
-        return;
-    }
+
     if (type_evenement.isEmpty()) {
         QMessageBox::warning(this, "Erreur de saisie", "Veuillez sélectionner un type d'événement.");
         return;
@@ -174,6 +246,10 @@ void Gevent::on_update_evenement_clicked()
 
             // Rafraîchir l'affichage des données dans la table
             ui->tableView->setModel(E.afficher_evenements());
+            ui->tableView->resizeColumnsToContents();
+
+            afficherStatistiques_evenements();
+
         } else {
             QMessageBox::critical(this, "Erreur", "Échec de la mise à jour de l'événement.");
         }
@@ -185,8 +261,139 @@ void Gevent::on_update_evenement_clicked()
         ui->lieu->clear();
         ui->date_debut->clear();
         ui->date_fin->clear();
-        ui->type->clear();
         ui->description->clear();
         ui->nbr_participants->clear();
+    }
+
+
+    void Gevent::on_telecharger_evenement_clicked()
+    {
+
+
+       Evenements event;
+       event.telecharger_pdf_evenements();
+
+    }
+
+
+    void Gevent::on_rechercher_evenement_clicked()
+    {
+        int id = ui->id_evenement_recherche->text().toInt(); // Récupérer l'ID depuis un champ texte
+
+        if (id <= 0) {
+            QMessageBox::warning(this, "Attention", "Veuillez entrer un ID valide !");
+            return;
+        }
+
+        Evenements event;
+        QSqlQueryModel* model = event.recherche_evenements(id);
+
+        if (model->rowCount() == 0) {
+            QMessageBox::information(this, "Résultat", "Aucun événement trouvé avec cet ID.");
+        } else {
+            model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
+            model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
+            model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date Début"));
+            model->setHeaderData(3, Qt::Horizontal, QObject::tr("Date Fin"));
+            model->setHeaderData(4, Qt::Horizontal, QObject::tr("nombre des participants"));
+            model->setHeaderData(5, Qt::Horizontal, QObject::tr("adresse"));
+            model->setHeaderData(6, Qt::Horizontal, QObject::tr("description"));
+            model->setHeaderData(7, Qt::Horizontal, QObject::tr("type"));
+            ui->tableView->setModel(model);
+        }
+
+    }
+
+
+
+
+
+ /*   void Gevent::on_tri_evenements_clicked()
+    {
+        QString critere = ui->critere_evenements->currentText();
+        QVariant valeur;
+
+        if (critere == "ID") {
+            valeur = ui->id_input->text().toInt();
+        } else if (critere == "Date de début") {
+            valeur = ui->date_input->date();
+        } else if (critere == "Nombre de participants") {
+            valeur = ui->nbr_participants_input->text().toInt();
+        }
+
+        QSqlQueryModel* model = evenements.filtrer_evenements(critere, valeur);
+
+        if (model) {
+            ui->tableView->setModel(model);
+        }
+    }
+*/
+
+
+
+    void Gevent::on_trier_evenements_clicked()
+    {
+        // Récupérer la valeur sélectionnée dans le QComboBox
+        QString critere = ui->critere_evenements->currentText();
+
+        // Appeler la fonction de tri
+        QSqlQueryModel* model = etmp.trier_evenements(critere);
+
+        // Appliquer ce modèle à un QTableView
+        model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
+        model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
+        model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date Début"));
+        model->setHeaderData(3, Qt::Horizontal, QObject::tr("Date Fin"));
+        model->setHeaderData(4, Qt::Horizontal, QObject::tr("nombre des participants"));
+        model->setHeaderData(5, Qt::Horizontal, QObject::tr("adresse"));
+        model->setHeaderData(6, Qt::Horizontal, QObject::tr("description"));
+        model->setHeaderData(7, Qt::Horizontal, QObject::tr("type"));
+        ui->tableView->setModel(model);
+    }
+
+/********************************************************************************************/
+
+
+    void Gevent::afficherStatistiques_evenements()
+    {
+        Evenements ev;
+        QMap<QString, int> stats = ev.stat_evenements();
+
+        if (stats.isEmpty()) {
+            qDebug() << "Aucune statistique à afficher.";
+            return;
+        }
+
+        QPieSeries *series = new QPieSeries();
+        for (auto it = stats.begin(); it != stats.end(); ++it) {
+            series->append(it.key(), it.value());
+        }
+
+        QChart *chart = new QChart();
+        chart->addSeries(series);
+        chart->setTitle("Répartition des événements par type");
+
+        QChartView *chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+
+
+        if (ui->stat_evenement->layout() != nullptr) {
+            QLayoutItem *child;
+            while ((child = ui->stat_evenement->layout()->takeAt(0)) != nullptr) {
+                delete child->widget();
+                delete child;
+            }
+        } else {
+            ui->stat_evenement->setLayout(new QVBoxLayout());
+        }
+
+        ui->stat_evenement->layout()->addWidget(chartView);
+    }
+
+
+    void Gevent::on_refrech_evenements_clicked()
+    {
+        ui->tableView->setModel(etmp.afficher_evenements());
+
     }
 
