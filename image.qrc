@@ -9,5 +9,6 @@
         <file>image/supprimer.png</file>
          <file>image/update4.png</file>
          <file>image/historique.png</file>
+       
     </qresource>
 </RCC>

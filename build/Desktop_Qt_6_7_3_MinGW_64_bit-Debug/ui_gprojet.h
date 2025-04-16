@@ -70,12 +70,12 @@ public:
     QWidget *tab_2;
     QLabel *label_15;
     QFrame *frame_3;
-    QLabel *label_20;
-    QLineEdit *conseil_ai_projet;
-    QLineEdit *id_ai_projet;
     QLabel *label_16;
-    QPushButton *pushButton_8;
+    QTextEdit *txtReponse;
+    QLabel *image_projet;
     QPushButton *annuler_conseil_projet;
+    QLineEdit *txtQuestion;
+    QPushButton *btnEnvoyer;
     QFrame *frame_2;
     QLabel *label_28;
     QLineEdit *id_hist_projet;
@@ -95,7 +95,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(10, 10, 1011, 561));
+        tabWidget->setGeometry(QRect(10, 10, 1011, 581));
         tabWidget->setStyleSheet(QString::fromUtf8("/* Style du QTabWidget */\n"
 "QTabWidget::pane {\n"
 "    border: 1px solid ;\n"
@@ -612,7 +612,7 @@ public:
         label_15->setScaledContents(true);
         frame_3 = new QFrame(tab_2);
         frame_3->setObjectName("frame_3");
-        frame_3->setGeometry(QRect(40, 40, 481, 361));
+        frame_3->setGeometry(QRect(40, 40, 551, 361));
         frame_3->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -647,106 +647,30 @@ public:
 ""));
         frame_3->setFrameShape(QFrame::Shape::StyledPanel);
         frame_3->setFrameShadow(QFrame::Shadow::Raised);
-        label_20 = new QLabel(frame_3);
-        label_20->setObjectName("label_20");
-        label_20->setGeometry(QRect(30, 60, 141, 71));
-        conseil_ai_projet = new QLineEdit(frame_3);
-        conseil_ai_projet->setObjectName("conseil_ai_projet");
-        conseil_ai_projet->setGeometry(QRect(20, 140, 431, 171));
-        conseil_ai_projet->setStyleSheet(QString::fromUtf8("QLabel {\n"
-"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
-"    font-size: 8px;                 /* Taille du texte */\n"
-"    font-weight: bold;               /* Texte en gras */\n"
-"    color: #4B4B4B;                  /* Couleur du texte */\n"
-"    background-color: #E8E3DD;       /* Fond doux */\n"
-"    padding: 8px 10px;              /* Espacement interne */\n"
-"    border-radius: 8px;              /* Coins arrondis */\n"
-"    text-align: center;              /* Centrer le texte */\n"
-"    margin: 10px;                    /* Espacement externe */\n"
-"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
-"}\n"
-"\n"
-"QLabel:hover {\n"
-"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
-"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
-"}\n"
-"\n"
-"QLabel:disabled {\n"
-"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
-"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
-                        "v\303\251 */\n"
-"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
-"}\n"
-"QLineEdit {\n"
-"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
-"    font-size: 14px;\n"
-"    background-color: #E8E3DD;\n"
-"    border: 1px solid #838db1;\n"
-"    border-radius: 5px;\n"
-"    padding: 4px;\n"
-"    color: #263A69;\n"
-"}"));
-        id_ai_projet = new QLineEdit(frame_3);
-        id_ai_projet->setObjectName("id_ai_projet");
-        id_ai_projet->setGeometry(QRect(180, 80, 131, 31));
-        id_ai_projet->setStyleSheet(QString::fromUtf8("QLabel {\n"
-"    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
-"    font-size: 8px;                 /* Taille du texte */\n"
-"    font-weight: bold;               /* Texte en gras */\n"
-"    color: #4B4B4B;                  /* Couleur du texte */\n"
-"    background-color: #E8E3DD;       /* Fond doux */\n"
-"    padding: 8px 10px;              /* Espacement interne */\n"
-"    border-radius: 8px;              /* Coins arrondis */\n"
-"    text-align: center;              /* Centrer le texte */\n"
-"    margin: 10px;                    /* Espacement externe */\n"
-"    border: 2px solid #D1C8B9;       /* Bordure douce */\n"
-"}\n"
-"\n"
-"QLabel:hover {\n"
-"    background-color: #D1C8B9;       /* Fond plus fonc\303\251 au survol */\n"
-"    border: 2px solid #A89F92;       /* Bordure changeante */\n"
-"}\n"
-"\n"
-"QLabel:disabled {\n"
-"    color: #A0A0A0;                  /* Couleur du texte d\303\251sactiv\303\251 */\n"
-"    background-color: #F0F0F0;       /* Fond plus clair quand d\303\251sacti"
-                        "v\303\251 */\n"
-"    border: 2px solid #A0A0A0;       /* Bordure d\303\251sactiv\303\251e */\n"
-"}\n"
-"QLineEdit {\n"
-"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
-"    font-size: 14px;\n"
-"    background-color: #E8E3DD;\n"
-"    border: 1px solid #838db1;\n"
-"    border-radius: 5px;\n"
-"    padding: 4px;\n"
-"    color: #263A69;\n"
-"}"));
         label_16 = new QLabel(frame_3);
         label_16->setObjectName("label_16");
-        label_16->setGeometry(QRect(100, 0, 241, 61));
-        pushButton_8 = new QPushButton(frame_3);
-        pushButton_8->setObjectName("pushButton_8");
-        pushButton_8->setGeometry(QRect(350, 320, 111, 31));
-        pushButton_8->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	font: 700 11pt \"Times New Roman\";\n"
-"	\n"
-"\n"
-"    background-color: #E8E3DD;\n"
-"    color: #6F7DAB;\n"
-"    border-radius: 5px;\n"
-"    padding: 8px;\n"
+        label_16->setGeometry(QRect(160, 10, 241, 61));
+        txtReponse = new QTextEdit(frame_3);
+        txtReponse->setObjectName("txtReponse");
+        txtReponse->setGeometry(QRect(10, 170, 291, 121));
+        txtReponse->setStyleSheet(QString::fromUtf8("#txtReponse {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
 "    font-size: 14px;\n"
-"}\n"
-"QPushButton:hover {\n"
 "    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
 "    color: #263A69;\n"
-"}\n"
-"\n"
-""));
+"}"));
+        txtReponse->setReadOnly(true);
+        image_projet = new QLabel(frame_3);
+        image_projet->setObjectName("image_projet");
+        image_projet->setGeometry(QRect(300, 160, 241, 141));
+        image_projet->setSizeIncrement(QSize(300, 300));
+        image_projet->setBaseSize(QSize(300, 300));
         annuler_conseil_projet = new QPushButton(frame_3);
         annuler_conseil_projet->setObjectName("annuler_conseil_projet");
-        annuler_conseil_projet->setGeometry(QRect(240, 320, 101, 31));
+        annuler_conseil_projet->setGeometry(QRect(120, 20, 41, 41));
         annuler_conseil_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -763,11 +687,43 @@ public:
 "}\n"
 "\n"
 ""));
-        QIcon icon6(QIcon::fromTheme(QIcon::ThemeIcon::EditClear));
-        annuler_conseil_projet->setIcon(icon6);
+        annuler_conseil_projet->setIcon(icon5);
+        txtQuestion = new QLineEdit(frame_3);
+        txtQuestion->setObjectName("txtQuestion");
+        txtQuestion->setGeometry(QRect(40, 100, 471, 51));
+        txtQuestion->setStyleSheet(QString::fromUtf8("#txtQuestion {\n"
+"    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
+"    font-size: 14px;\n"
+"    background-color: #E8E3DD;\n"
+"    border: 1px solid #838db1;\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"    color: #263A69;\n"
+"}"));
+        btnEnvoyer = new QPushButton(frame_3);
+        btnEnvoyer->setObjectName("btnEnvoyer");
+        btnEnvoyer->setGeometry(QRect(410, 110, 91, 31));
+        btnEnvoyer->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	font: 700 11pt \"Times New Roman\";\n"
+"	\n"
+"\n"
+"    background-color: #E8E3DD;\n"
+"    color: #6F7DAB;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px;\n"
+"    font-size: 14px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #E8E3DD;\n"
+"    color: #263A69;\n"
+"}\n"
+"\n"
+""));
+        QIcon icon6(QIcon::fromTheme(QIcon::ThemeIcon::MediaSeekForward));
+        btnEnvoyer->setIcon(icon6);
         frame_2 = new QFrame(tab_2);
         frame_2->setObjectName("frame_2");
-        frame_2->setGeometry(QRect(560, 40, 371, 361));
+        frame_2->setGeometry(QRect(620, 40, 371, 361));
         frame_2->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -923,7 +879,8 @@ public:
 "}\n"
 "\n"
 ""));
-        anuuler_hist->setIcon(icon6);
+        QIcon icon8(QIcon::fromTheme(QIcon::ThemeIcon::EditClear));
+        anuuler_hist->setIcon(icon8);
         tabWidget->addTab(tab_2, QString());
         Gprojet->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Gprojet);
@@ -936,7 +893,7 @@ public:
 
         retranslateUi(Gprojet);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         update_projet->setDefault(false);
 
 
@@ -971,10 +928,19 @@ public:
         refresh_projet->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Gprojet", "Gestion des projets", nullptr));
         label_15->setText(QString());
-        label_20->setText(QCoreApplication::translate("Gprojet", "Id_projet:", nullptr));
-        label_16->setText(QCoreApplication::translate("Gprojet", "Des conseils g\303\251n\303\251r\303\251s avec l'IA", nullptr));
-        pushButton_8->setText(QCoreApplication::translate("Gprojet", "G\303\251n\303\251rer ", nullptr));
-        annuler_conseil_projet->setText(QCoreApplication::translate("Gprojet", "  Annuler", nullptr));
+        label_16->setText(QCoreApplication::translate("Gprojet", "               Consutiny Bot", nullptr));
+        txtReponse->setHtml(QCoreApplication::translate("Gprojet", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Poppins','Arial','sans-serif'; font-size:14px; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+        image_projet->setText(QCoreApplication::translate("Gprojet", "         G\303\251n\303\251ration des images", nullptr));
+        annuler_conseil_projet->setText(QString());
+        txtQuestion->setText(QCoreApplication::translate("Gprojet", "Pose ta question \360\237\230\212  ", nullptr));
+        btnEnvoyer->setText(QCoreApplication::translate("Gprojet", "G\303\251n\303\251rer", nullptr));
         label_28->setText(QCoreApplication::translate("Gprojet", "       Historique du projet           ", nullptr));
         hist_projet->setText(QCoreApplication::translate("Gprojet", "    Historique", nullptr));
         label_21->setText(QCoreApplication::translate("Gprojet", "Id_projet:", nullptr));

@@ -1,0 +1,8 @@
+bonjour|bonsoir|salut
+Salut ! Comment ça va ?|Bienvenue !|Bonjour à vous !
+
+comment tu t'appelles|ton nom
+Je suis ConsultiniBot, votre assistant intelligent.
+
+merci|thanks
+Avec plaisir !|Je suis là pour vous aider.

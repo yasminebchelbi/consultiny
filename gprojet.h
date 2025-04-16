@@ -3,6 +3,9 @@
 #include<projets.h>
 #include <QMainWindow>
 #include <QtCharts>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,7 +39,6 @@ private slots:
     void on_telecharger_projet_clicked();
     void exporterProjetsTexte();
     void afficherStatistiquesStatus() ;
-    void startStatistiquesTimer();
     void on_hist_projet_clicked();
     void on_annuler_conseil_projet_clicked();
 
@@ -45,8 +47,22 @@ private slots:
     void on_refresh_projet_clicked();
     QString colorizeModification(const QString& text);
 
+    //void on_btnEnvoyer_projet_clicked();
+
+    //void on_btnEnvoyer_projet_clicked();
+    //void enregistrerQuestionDansFichier(const QString &question);
+
+    //void on_txtQuestion_returnPressed();
+    void on_btnEnvoyer_clicked();
+    void handleNetworkReply(QNetworkReply* reply);
+
+    void on_txtQuestion_returnPressed();
+
+    void on_fullscreen_clicked();
+
 private:
     Ui::Gprojet *ui;
     Projets P;
+    QNetworkAccessManager *manager;
 };
 #endif // GPROJET_H

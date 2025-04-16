@@ -39,10 +39,10 @@ public:
     bool supprimer(int);
     bool update( int id_projet,QString nom_projet, QDate date_debut, QString status_projet,
                 QString secteur_projet, int budget_projet, int cout_projet, QString description_projet);
-    QVector<int> statMensuelle();
 
-    //QMap<QString, int>statistiques_mensuelles();
     void telecharger_projet();
+    bool projetExiste(int );
+
 
 
 private:

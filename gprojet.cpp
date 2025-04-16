@@ -27,7 +27,12 @@
 #include <QMessageBox>
 #include <QPieSeries>
 #include <QFrame>
-
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 
 
@@ -37,6 +42,7 @@ Gprojet::Gprojet(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Gprojet)
     , P()
+    ,manager(new QNetworkAccessManager(this))
 {
     ui->setupUi(this);
     ui->tableView->setModel(P.afficher());
@@ -55,6 +61,7 @@ Gprojet::Gprojet(QWidget *parent)
         connect(ui->lineEdit_adresse, &QLineEdit::textChanged, this, &Gprojet::verifierSaisie);
         connect(ui->plainTextEdit_description, &QPlainTextEdit::textChanged, this, &Gprojet::verifierSaisie);
         connect(ui->dateTimeEdit, &QDateTimeEdit::dateChanged, this, &Gprojet::verifierSaisie);
+        connect(manager, &QNetworkAccessManager::finished, this, &Gprojet::handleNetworkReply);
 
         exporterProjetsTexte();
         afficherStatistiquesStatus() ;
@@ -182,6 +189,8 @@ void Gprojet::on_ajouter_projet_clicked()
     if (test)
     {
         ui->tableView->setModel(P.afficher());
+        afficherStatistiquesStatus() ;
+
         QMessageBox::information(nullptr, QObject::tr("Succès"),
                                  QObject::tr("Ajout effectué !\nCliquez sur OK pour continuer."),
                                  QMessageBox::Ok);
@@ -223,6 +232,8 @@ void Gprojet::on_supprimer_projet_clicked(){
         if (P.supprimer(id_projet)) {
             // Mise à jour de la vue de la table
             ui->tableView->setModel(P.afficher());
+            afficherStatistiquesStatus() ;
+
             QMessageBox::information(this, tr("Succès"), tr("Projet supprimé avec succès."));
         } else {
             QMessageBox::critical(this, tr("Échec"), tr("Échec de la suppression du projet."));
@@ -232,7 +243,7 @@ void Gprojet::on_supprimer_projet_clicked(){
 
 //*********************************************modifier le projet**************************************************************
 
-void Gprojet::on_update_projet_clicked()
+/*void Gprojet::on_update_projet_clicked()
 {
         // Vérifier si une ligne est sélectionnée
         QModelIndexList selectedIndexes = ui->tableView->selectionModel()->selectedRows();
@@ -295,7 +306,7 @@ void Gprojet::on_update_projet_clicked()
                                        ", Secteur: " + secteur_projet +
                                        ", Statut: " + status_projet +
                                        ", Budget: " + QString::number(budget_projet) +
-                                       ", Coût: " + QString::number(cout_projet) +
+                                       ", Cout: " + QString::number(cout_projet) +
                                        ", Adresse: " + adresse_projet +
                                        ", Description: " + description_projet +")";
 
@@ -319,9 +330,132 @@ void Gprojet::on_update_projet_clicked()
 
             // Rafraîchir l'affichage des données dans la table
             ui->tableView->setModel(P.afficher());
+            afficherStatistiquesStatus() ;
+
         }
     }
+*/
+void Gprojet::on_update_projet_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView->selectionModel()->selectedRows();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur"), tr("Veuillez sélectionner une ligne à modifier."));
+        return;
+    }
 
+    int row = selectedIndexes.first().row();
+    int id_projet = ui->tableView->model()->data(ui->tableView->model()->index(row, 0)).toInt();
+
+    if (id_projet == 0) {
+        QMessageBox::warning(this, tr("Erreur"), tr("L'ID du projet est invalide."));
+        return;
+    }
+
+    // Récupérer les nouvelles valeurs
+    QString new_nom = ui->tableView->model()->data(ui->tableView->model()->index(row, 1)).toString();
+    QDate new_date = ui->tableView->model()->data(ui->tableView->model()->index(row, 2)).toDate();
+    int new_budget = ui->tableView->model()->data(ui->tableView->model()->index(row, 3)).toInt();
+    QString new_secteur = ui->tableView->model()->data(ui->tableView->model()->index(row, 4)).toString();
+    QString new_status = ui->tableView->model()->data(ui->tableView->model()->index(row, 5)).toString();
+    int new_cout = ui->tableView->model()->data(ui->tableView->model()->index(row, 6)).toInt();
+    QString new_adresse = ui->tableView->model()->data(ui->tableView->model()->index(row, 7)).toString();
+    QString new_desc = ui->tableView->model()->data(ui->tableView->model()->index(row, 8)).toString();
+
+    // Charger les anciennes valeurs depuis la base
+    QSqlQuery query;
+    query.prepare("SELECT nom_projet, date_debut, budget_projet, secteur_projet, status_projet, cout_projet, adresse_projet, description_projet FROM projet WHERE id_projet = :id_projet");
+    query.bindValue(":id_projet", id_projet);
+
+    if (!query.exec() || !query.next()) {
+        QMessageBox::critical(this, tr("Erreur"), tr("Impossible de charger les données du projet."));
+        return;
+    }
+
+    QString old_nom = query.value(0).toString();
+    QDate old_date = query.value(1).toDate();
+    int old_budget = query.value(2).toInt();
+    QString old_secteur = query.value(3).toString();
+    QString old_status = query.value(4).toString();
+    int old_cout = query.value(5).toInt();
+    QString old_adresse = query.value(6).toString();
+    QString old_desc = query.value(7).toString();
+
+    // Vérifier les champs requis
+    if (new_nom.isEmpty() || new_secteur.isEmpty() || new_status.isEmpty() || new_desc.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur"), tr("Veuillez remplir tous les champs obligatoires."));
+        return;
+    }
+
+    if (new_budget <= 0 || new_cout < 0) {
+        QMessageBox::warning(this, tr("Erreur"), tr("Le budget et le coût doivent être positifs."));
+        return;
+    }
+
+    if (new_date < QDate::currentDate()) {
+        QMessageBox::warning(this, tr("Erreur"), tr("La date ne peut pas être dans le passé."));
+        return;
+    }
+
+    // Préparer la mise à jour uniquement pour les champs modifiés
+    QStringList updates;
+    QVariantMap params;
+
+    if (new_nom != old_nom) { updates << "nom_projet = :nom"; params[":nom"] = new_nom; }
+    if (new_date != old_date) { updates << "date_debut = :date"; params[":date"] = new_date; }
+    if (new_budget != old_budget) { updates << "budget_projet = :budget"; params[":budget"] = new_budget; }
+    if (new_secteur != old_secteur) { updates << "secteur_projet = :secteur"; params[":secteur"] = new_secteur; }
+    if (new_status != old_status) { updates << "status_projet = :statut"; params[":statut"] = new_status; }
+    if (new_cout != old_cout) { updates << "cout_projet = :cout"; params[":cout"] = new_cout; }
+    if (new_adresse != old_adresse) { updates << "adresse_projet = :adresse"; params[":adresse"] = new_adresse; }
+    if (new_desc != old_desc) { updates << "description_projet = :description"; params[":description"] = new_desc; }
+
+    if (updates.isEmpty()) {
+        QMessageBox::information(this, tr("Information"), tr("Aucune modification détectée."));
+        return;
+    }
+
+    // Confirmer la mise à jour
+    QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Confirmation"),
+                                                              tr("Voulez-vous enregistrer les modifications ?"),
+                                                              QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        QString updateQueryStr = "UPDATE projet SET " + updates.join(", ") + " WHERE id_projet = :id_projet";
+        QSqlQuery updateQuery;
+        updateQuery.prepare(updateQueryStr);
+
+        for (auto it = params.begin(); it != params.end(); ++it) {
+            updateQuery.bindValue(it.key(), it.value());
+        }
+        updateQuery.bindValue(":id_projet", id_projet);
+
+        if (!updateQuery.exec()) {
+            QMessageBox::critical(this, tr("Erreur"), tr("Échec de la mise à jour: ") + updateQuery.lastError().text());
+            return;
+        }
+
+        // Historique
+        QString modification;
+        for (auto it = params.begin(); it != params.end(); ++it) {
+            modification += it.key().mid(1) + ": " + it.value().toString() + "<br>";
+        }
+
+        QSqlQuery histoQuery;
+        histoQuery.prepare("INSERT INTO historique (id_projet, date_modif, modification) "
+                           "VALUES (:id, :date, :modif)");
+        histoQuery.bindValue(":id", id_projet);
+        histoQuery.bindValue(":date", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        histoQuery.bindValue(":modif", modification);
+
+        if (!histoQuery.exec()) {
+            qDebug() << "Erreur insertion historique: " << histoQuery.lastError().text();
+        }
+
+        QMessageBox::information(this, tr("Succès"), tr("Projet mis à jour avec succès."));
+        ui->tableView->setModel(P.afficher());
+        afficherStatistiquesStatus();
+    }
+}
 
 void Gprojet::on_annuler_projet_clicked()
 {
@@ -388,7 +522,6 @@ void Gprojet::on_recherche_projet_2_clicked()
     proxyModel->setSourceModel(P.afficher()); // Associer le modèle des projets
 
     proxyModel->setFilterKeyColumn(P.afficher()->fieldIndex("statut")); // Filtrer par statut
-    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive); // Ignorer la casse
     proxyModel->setFilterFixedString(statut); // Appliquer le filtre
 
     ui->tableView->setModel(proxyModel); // Afficher les résultats filtrés
@@ -426,7 +559,7 @@ void Gprojet::on_telecharger_projet_clicked()
                    "table { width: 100%; border-collapse: collapse; margin-top: 20px; }"
                    "th, td { padding: 10px; text-align: left; border: 1px solid black; }"
                    "th { background-color: #6f7dab; color: white; }"
-                   "td { background-color: #f9f9f9; }"
+                   "td { background-color: #f9f9f9 ; }"
                    ".footer { text-align: center; margin-top: 20px; font-style: italic; }"
                    ".logo { text-align: center; margin-bottom: 10px; }"
                    "</style></head><body>";
@@ -473,9 +606,22 @@ void Gprojet::on_telecharger_projet_clicked()
 //*******************************************fonction des statistiques***************************************************
 void Gprojet::afficherStatistiquesStatus() {
     // Créer un QPieSeries pour les statistiques
+    QLayout *oldLayout = ui->frame_stat->layout();
+    if (oldLayout != nullptr) {
+        QLayoutItem *item;
+        while ((item = oldLayout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                delete item->widget();  // Supprime les anciens widgets (ex : QChartView)
+            }
+            delete item;
+        }
+        delete oldLayout;
+    }
+
+    // Créer une nouvelle série pour le graphique circulaire
     QPieSeries *series = new QPieSeries();
 
-    // Requête SQL pour récupérer les statistiques de statut de projet
+    // Requête SQL pour récupérer les statistiques de statut
     QSqlQuery query;
     query.prepare("SELECT status_projet, COUNT(*) FROM projet GROUP BY status_projet");
 
@@ -484,35 +630,38 @@ void Gprojet::afficherStatistiquesStatus() {
         return;
     }
 
-    // Ajouter des données à la série pie en fonction des résultats de la requête
     while (query.next()) {
         QString status = query.value(0).toString();
         int count = query.value(1).toInt();
-
-        // Ajouter un secteur au graphique pour chaque statut
         series->append(status, count);
     }
 
-    // Créer le graphique
+    // Gérer le cas où aucune donnée n'est trouvée
+    if (series->count() == 0) {
+        QMessageBox::information(nullptr, "Statistiques vides", "Aucun projet trouvé pour afficher les statistiques.");
+        return;
+    }
+
+    // Amélioration visuelle
+    series->setLabelsVisible(true);
+    series->setLabelsPosition(QPieSlice::LabelOutside);
+
+    // Création du graphique
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Répartition des projets par statut");
+    chart->legend()->setAlignment(Qt::AlignRight);
 
-    // Créer un QChartView pour afficher le graphique
+    // Création du widget d'affichage du graphique
     QChartView *view = new QChartView(chart);
     view->setRenderHint(QPainter::Antialiasing);
 
-    // Rendre le graphique dynamique en l'ajoutant à une QFrame
-    QVBoxLayout *layout = new QVBoxLayout(ui->frame_stat);  // ui->frame_stat est votre QFrame
+    // Création et affectation du nouveau layout
+    QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(view);
     ui->frame_stat->setLayout(layout);
 }
-//****************************le timer pour fiare les mise a jour des stat chaque 5ms*************************************
-void Gprojet::startStatistiquesTimer() {
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Gprojet::afficherStatistiquesStatus);
-    timer->start(5000);  // 5000 ms = 5 secondes
-}
+
 
 
 //****************************stockage des projets dans un fichier texte****************************************************
@@ -537,7 +686,8 @@ void Gprojet::exporterProjetsTexte() {
 
     QTextStream out(&file);
     QSqlQuery query;
-    query.prepare("SELECT nom_projet, date_debut, secteur_projet, status_projet FROM projet");
+    query.prepare("SELECT nom_projet, date_debut, secteur_projet, status_projet FROM projet WHERE status_projet = 'annulé'");
+
 
     // 5️⃣ Vérifier si la requête a été exécutée avec succès
     if (!query.exec()) {
@@ -568,7 +718,7 @@ void Gprojet::exporterProjetsTexte() {
     } while (query.next());  // Passer à la prochaine ligne dans la base de données
 
     file.close();
-    QMessageBox::information(nullptr, "Succès", "Le fichier projets.txt a été créé avec succès !\n\n Emplacement : " + filePath);
+    //QMessageBox::information(nullptr, "Succès", "Le fichier Historique.txt a été créé avec succès !\n\n Emplacement : " + filePath);
 }
 //******************************************pour afficher l'historique des modifcations ***********************************
 void Gprojet::on_hist_projet_clicked()
@@ -600,18 +750,21 @@ void Gprojet::on_hist_projet_clicked()
             QString date_modif = query.value(0).toDateTime().toString("dd/MM/yyyy hh:mm:ss");
             QString modification = query.value(1).toString();
 
-            // Mise en forme personnalisée
+            // Mise en forme personnalisée — seulement les vraies modifications
             QString modifStyled = colorizeModification(modification);
 
-            historiqueHTML += "<p><span style='color:#000000; font-weight:bold;'>[" + date_modif + "]</span> "
-                              + modifStyled + "</p><hr>";
+            if (!modifStyled.isEmpty()) {
+                historiqueHTML += "<div style='margin-bottom:10px;'>";
+                historiqueHTML += "<p><span style='color:#555; font-weight:bold;'>🕒 " + date_modif + "</span></p>";
+                historiqueHTML += "<p style='color:#000;'>📝 Les informations modifiées sont :<br>" + modifStyled + "</p>";
+                historiqueHTML += "<hr></div>";
+            }
         }
 
         if (historiqueHTML.isEmpty()) {
             historiqueHTML = "<p style='color:#888;'>Aucune modification enregistrée pour ce projet.</p>";
         }
 
-        // Affichage stylisé dans QTextEdit
         ui->historique_projet->setHtml(historiqueHTML);
     } else {
         QMessageBox::critical(this, tr("Erreur"), tr("Erreur lors de la récupération de l'historique."));
@@ -620,21 +773,33 @@ void Gprojet::on_hist_projet_clicked()
 }
 QString Gprojet::colorizeModification(const QString& text)
 {
-    QString modif = text;
+    // Exemple : (Nom: yasminaa, Date: 2025-06-05, ...)
+    QRegularExpression regex(R"((\w+):\s*([^,)\n]+))");  // Capture Nom: valeur
+    QRegularExpressionMatchIterator it = regex.globalMatch(text);
 
-    // Expression régulière pour détecter : quelque chose "changé de 'X' à 'Y'"
-    QRegularExpression regex(R"((\b\w+\b\s+changé\s+de\s+'.+?'\s+à\s+'.+?'))",
-                             QRegularExpression::CaseInsensitiveOption);
+    QStringList lignes;
 
-    // Remplacement des correspondances par la même phrase colorée
-    return modif.replace(regex, "<span style='color:#007ACC;'>\\1</span>");
+    while (it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        QString champ = match.captured(1);
+        QString valeur = match.captured(2);
+
+        // Colorer le champ
+        QString ligne = "<span style='color:#007ACC; font-weight:bold;'>" + champ + "</span>: "
+                        + "<span style='color:#000;'>" + valeur + "</span>";
+        lignes << ligne;
+    }
+
+    return lignes.join("<br>");
 }
+
 
 //***************************************bouton annuler des conseils*****************************************************
 void Gprojet::on_annuler_conseil_projet_clicked()
 {
-     ui->conseil_ai_projet->clear();
-     ui->id_ai_projet->clear();
+     ui->txtQuestion->clear();
+     ui->txtReponse->clear();
+     ui->image_projet->clear();
 }
 
 //**************************************bouton annuler les historiques***************************************************
@@ -648,5 +813,258 @@ void Gprojet::on_anuuler_hist_clicked()
 void Gprojet::on_refresh_projet_clicked()
 {
     ui->tableView->setModel(P.afficher());
+
+}
+//********************fonction de la genration des conseils et des images aprztir d'un fichier nommé resssource********************************************
+
+/*void Gprojet::on_txtQuestion_returnPressed()
+{
+    QString userInput = ui->txtQuestion->text().trimmed().toLower();
+
+    // 🔍 Vérifier si l'utilisateur demande une image spécifique
+    QRegularExpression reImage("donne moi l'image de (\\w+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch matchImage = reImage.match(userInput);
+
+    if (matchImage.hasMatch()) {
+        QString imageName = matchImage.captured(1).toLower();  // Nom de l'image demandée
+        QStringList extensions = {"jpg", "jpeg", "png", "gif", "jfif"};  // Liste des extensions possibles
+        bool imageFound = false;
+
+        // Vérifier chaque extension pour l'image
+        for (const QString& ext : extensions) {
+            QString imagePath = "C:/Users/HP/Desktop/image/" + imageName + "." + ext;
+            QPixmap pixmap(imagePath);
+
+            // Vérifier si l'image existe avec cette extension
+            QFile file(imagePath);
+            if (file.exists()) {
+                QString htmlImage = "<img src='file://" + imagePath + "' width='300' height='300' />";
+                if (!pixmap.isNull()) {
+                    // 🔍 Redimensionne proprement l’image au QLabel
+                    QPixmap scaledPixmap = pixmap.scaled(ui->image_projet->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    ui->image_projet->setPixmap(scaledPixmap);
+                } else {
+                    QMessageBox::warning(this, "Erreur", "L'image n'a pas pu être chargée !");
+                }
+                imageFound = true;
+                break;  // Sortir de la boucle dès qu'une image est trouvée
+            }
+        }
+
+        if (!imageFound) {
+            ui->image_projet->setText("❌ L'image demandée n'existe pas.");
+        }
+
+        return;  // Sortir de la fonction après traitement de l'image
+    }
+
+    // 🔍 Vérifier si l'utilisateur demande si un projet existe en fonction de son ID
+    QRegularExpression re("id du projet est[: ]*(\\d+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = re.match(userInput);
+
+    if (match.hasMatch()) {
+        int idProjet = match.captured(1).toInt();
+
+        QSqlQuery query;
+        query.prepare("SELECT COUNT(*) FROM projet WHERE id_projet = :id");
+        query.bindValue(":id", idProjet);
+
+        if (query.exec() && query.next()) {
+            int count = query.value(0).toInt();
+            if (count > 0) {
+                ui->txtReponse->setText("✅ Oui, le projet avec l'ID " + QString::number(idProjet) + " existe dans la base de données.");
+            } else {
+                ui->txtReponse->setText("❌ Aucun projet avec l'ID " + QString::number(idProjet) + " trouvé.");
+            }
+            return;
+        } else {
+            ui->txtReponse->setText("Erreur lors de la requête SQL.");
+            return;
+        }
+    }
+
+    // 🏙️ Vérifier si l'utilisateur indique une ville
+    QRegularExpression reVille("la ville de projet est[: ]*(\\w+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch matchVille = reVille.match(userInput);
+
+    if (matchVille.hasMatch()) {
+        QString nomVille = matchVille.captured(1).trimmed();
+        QFile fichierVille("C:/Users/HP/Desktop/villes.txt");
+
+        if (!fichierVille.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            ui->txtReponse->setText("Erreur lors de la lecture du fichier des villes.");
+            return;
+        }
+
+        QTextStream stream(&fichierVille);
+        bool villeTrouvee = false;
+
+        while (!stream.atEnd()) {
+            QString ligne = stream.readLine();
+            QStringList parts = ligne.split(":");
+
+            if (parts.size() == 2) {
+                QString ville = parts[0].trimmed();
+                QString conseil = parts[1].trimmed();
+
+                if (ville.compare(nomVille, Qt::CaseInsensitive) == 0) {
+                    ui->txtReponse->setText("📍 " + conseil);
+                    villeTrouvee = true;
+                    break;
+                }
+            }
+        }
+
+        if (!villeTrouvee) {
+            ui->txtReponse->setText("❌ Je n’ai pas encore d'informations sur cette ville.");
+        }
+
+        return;
+    }
+
+    // 🤖 Sinon, chercher dans le fichier ressource.txt pour d'autres réponses
+    QFile file("C:/Users/HP/Desktop/ressource.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ui->txtReponse->setText("Erreur de lecture du fichier.");
+        return;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString lineQuestions = in.readLine();
+        QString lineResponses = in.readLine();
+
+        QStringList questions = lineQuestions.split("|", Qt::SkipEmptyParts);
+        QStringList responses = lineResponses.split("|", Qt::SkipEmptyParts);
+
+        for (const QString& q : questions) {
+            if (userInput.contains(q.trimmed(), Qt::CaseInsensitive)) {
+                int randomIndex = QRandomGenerator::global()->bounded(responses.size());
+                ui->txtReponse->setText(responses[randomIndex].trimmed());
+                return;
+            }
+        }
+    }
+
+    ui->txtReponse->setText("Je n’ai pas compris. Pouvez-vous reformuler ?");
+    enregistrerQuestionDansFichier(userInput);
+
+
+}
+
+void Gprojet::enregistrerQuestionDansFichier(const QString &question) {
+    // Ouvrir le fichier en mode ajout (append)
+    QFile file("C:/Users/HP/Desktop/question.txt");  // Remplace ce chemin par le fichier que tu veux utiliser
+    if (!file.open(QIODevice::Append | QIODevice::Text)) {
+        qDebug() << "Impossible d'ouvrir le fichier pour ajouter la question.";
+        return;
+    }
+
+    QTextStream out(&file);
+    // Ajouter la question suivie d'un saut de ligne
+    out << question << "\n";
+
+    // Fermer le fichier après l'ajout
+    file.close();
+    qDebug() << "Question ajoutée dans le fichier.";
+}*/
+//************************fonction pour le chatbot avec un API (deepseek)************************************************
+void Gprojet::on_txtQuestion_returnPressed() {
+    QString question = ui->txtQuestion->text();
+
+    QUrl url("https://openrouter.ai/api/v1/chat/completions");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    // 🔐 Ajoute ta clé ici
+    request.setRawHeader("Authorization", "Bearer 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");
+    request.setRawHeader("HTTP-Referer", "https://consultini.tn");
+    request.setRawHeader("Consultiny Bot", "Consultiny Chat");
+
+    QJsonObject message;
+    message["role"] = "user";
+    message["content"] = question;
+
+    QJsonArray messages;
+    messages.append(message);
+
+    QJsonObject body;
+    body["model"] = "mistralai/mistral-7b-instruct"; // modèle gratuit
+    body["messages"] = messages;
+
+    QJsonDocument doc(body);
+    QByteArray data = doc.toJson();
+
+    manager->post(request, data);
+}
+
+void Gprojet::handleNetworkReply(QNetworkReply* reply) {
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray responseData = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(responseData);
+        QString result;
+
+        QJsonArray choices = doc["choices"].toArray();
+        if (!choices.isEmpty()) {
+            QJsonObject message = choices[0].toObject()["message"].toObject();
+            result = message["content"].toString();
+        }
+
+        ui->txtReponse->setText(result);
+    } else {
+        ui->txtReponse->setText("Erreur: " + reply->errorString());
+    }
+    reply->deleteLater();
+}
+
+
+void Gprojet::on_btnEnvoyer_clicked()
+{
+    QString userInput = ui->txtQuestion->text().trimmed().toLower();
+
+    // 🔍 Vérifier si l'utilisateur demande une image spécifique
+    QRegularExpression reImage("donne moi l'image de (\\w+)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch matchImage = reImage.match(userInput);
+
+    if (matchImage.hasMatch()) {
+        QString imageName = matchImage.captured(1).toLower();  // Nom de l'image demandée
+        QStringList extensions = {"jpg", "jpeg", "png", "gif", "jfif"};  // Liste des extensions possibles
+        bool imageFound = false;
+
+        // Vérifier chaque extension pour l'image
+        for (const QString& ext : extensions) {
+            QString imagePath = "C:/Users/HP/Desktop/image/" + imageName + "." + ext;
+            QPixmap pixmap(imagePath);
+
+            // Vérifier si l'image existe avec cette extension
+            QFile file(imagePath);
+            if (file.exists()) {
+                QString htmlImage = "<img src='file://" + imagePath + "' width='300' height='300' />";
+                if (!pixmap.isNull()) {
+                    // 🔍 Redimensionne proprement l’image au QLabel
+                    QPixmap scaledPixmap = pixmap.scaled(ui->image_projet->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    ui->image_projet->setPixmap(scaledPixmap);
+                } else {
+                    QMessageBox::warning(this, "Erreur", "L'image n'a pas pu être chargée !");
+                }
+                imageFound = true;
+                break;  // Sortir de la boucle dès qu'une image est trouvée
+            }
+        }
+
+        if (!imageFound) {
+            ui->image_projet->setText("❌ L'image demandée n'existe pas.");
+        }
+}
+}
+
+void Gprojet::on_fullscreen_clicked()
+{
+    this->showFullScreen();
+    ui->tabWidget->setGeometry(0, 0, this->width(), this->height());  // Redimensionner le QTabWidget pour qu'il prenne toute la fenêtre
+    for (int i = 0; i < ui->tabWidget->count(); ++i) {
+        QWidget *tabWidget = ui->tabWidget->widget(i);
+        tabWidget->setGeometry(0, 0, this->width(), this->height());
+    }
 }
 
