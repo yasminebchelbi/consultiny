@@ -6,6 +6,68 @@
         <file>image.qrc/remove.png</file>
         <file>image.qrc/download.png</file>
         <file>image.qrc/search.png</file>
+        <file>image.qrc/meteo.png</file>
+        <file>image.qrc/environnement.png</file>
+        <file>image.qrc/environnement1.png</file>
+        <file>image.qrc/environnement2.png</file>
+        <file>image.qrc/art.png</file>
+        <file>image.qrc/art1.png</file>
+        <file>image.qrc/art2.png</file>
+        <file>image.qrc/default1.png</file>
+        <file>image.qrc/default2.png</file>
+        <file>image.qrc/default.png</file>
+        <file>image.qrc/ecole.png</file>
+        <file>image.qrc/ecole1.png</file>
+        <file>image.qrc/ecole2.png</file>
+        <file>image.qrc/sante.png</file>
+        <file>image.qrc/sante1.png</file>
+        <file>image.qrc/sante2.png</file>
+        <file>image.qrc/softSkills.png</file>
+        <file>image.qrc/softSkills1.png</file>
+        <file>image.qrc/softSkills2.png</file>
+        <file>image.qrc/technologie.png</file>
+        <file>image.qrc/technologie1.png</file>
+        <file>image.qrc/technologie2.png</file>
+        <file>image.qrc/tech_bg.png</file>
+        <file>image.qrc/tech_bg1.png</file>
+        <file>image.qrc/tech_bg2.png</file>
+        <file>image.qrc/sante_bg.png</file>
+        <file>image.qrc/sante_bg1.png</file>
+        <file>image.qrc/sante_bg2.png</file>
+        <file>image.qrc/edu_bg.png</file>
+        <file>image.qrc/edu_bg1.png</file>
+        <file>image.qrc/edu_bg2.png</file>
+        <file>image.qrc/art_bg.png</file>
+        <file>image.qrc/art_bg1.png</file>
+        <file>image.qrc/art_bg2.png</file>
+        <file>image.qrc/eco_bg1.png</file>
+        <file>image.qrc/eco_bg2.png</file>
+        <file>image.qrc/eco_bg.png</file>
+        <file>image.qrc/default_bg.png</file>
+        <file>image.qrc/default_bg1.png</file>
+        <file>image.qrc/default_bg2.png</file>
+        <file>image.qrc/softSkills_bg.png</file>
+        <file>image.qrc/softSkills_bg1.png</file>
+        <file>image.qrc/softSkills_bg2.png</file>
+
+
+
+
+
+        <file>font.qrc/AMORIA.otf</file>
+        <file>font.qrc/AVENGEANCE HEROIC AVENGER AT.otf</file>
+        <file>font.qrc/Bassunpersonaluse.otf</file>
+        <file>font.qrc/Beachfly Free Trial.ttf</file>
+        <file>font.qrc/Drawliner.ttf</file>
+        <file>font.qrc/Gloomie Saturday.otf</file>
+        <file>font.qrc/Jackal Holiday.otf</file>
+        <file>font.qrc/Sakitu Baelah Clean.ttf</file>
+        <file>font.qrc/varsity_regular.ttf</file>
+
+
+
+
+
 
     </qresource>
 </RCC>

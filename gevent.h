@@ -1,7 +1,8 @@
 #ifndef GEVENT_H
 #define GEVENT_H
 #include "evenements.h"
-
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +28,7 @@ private slots:
     void on_update_evenement_clicked();
 
     void on_pushButton_2_clicked();
-    // 🚀 Fonctions de validation en temps réel
+    // Fonctions de validation en temps réel
     void verifierNom();
     void verifierDates();
     void verifierParticipants();
@@ -49,9 +50,59 @@ private slots:
 
     void on_refrech_evenements_clicked();
 
+ // calendrier
+    void afficherEvenementsParDate(const QDate &date);
+
+    void on_calendarWidget_clicked(const QDate &date);
+    void ajouterEvenement();
+    void modifierEvenement();
+    void supprimerEvenement();
+
+
+    void on_supprimer_evenement_2_clicked();
+
+    void on_update_evenement_2_clicked();
+
+    void on_refrech_evenements_2_clicked();
+
+    void onWeatherDataReceived(QNetworkReply* reply);
+    QStringList getWeatherTips(const QString& weather, double temp);
+
+
+
+    void on_adviceButton_clicked();
+
+
+
+    void on_generateFlyer_clicked();
+
+
+    void on_valider_flyer_clicked();
+
+    void on_rejeter_flyer_clicked();
+
 private:
     Ui::Gevent *ui;
     Evenements etmp;
+    QImage currentEventFlyer;
+    int currentEventId;
+
+    int currentSelectedEventID = -1;
+    QPixmap currentFlyer;
+    QString currentLieu;
+     QString currentLocation;
+    QDate currentEventDate;
+    QNetworkAccessManager *networkManager;
+    void fetchWeatherData(const QDate& date, const QString& location, const QString& lieu);
+    //void fetchWeatherData(const QString& location, const QString& lieu);
+    void generateAdvice(const QJsonObject& weatherData, const QString& location, const QString& lieu);
+    //void fetchCurrentWeather(const QString& location, const QString& lieu);
+    //oid onCurrentWeatherReceived(QNetworkReply* reply);
+
+
+
+
+
 
 
 };

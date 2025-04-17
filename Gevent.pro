@@ -3,6 +3,9 @@ QT       += charts
 QT       +=sql
 QT       += printsupport
 QT       += charts
+QT       +=core gui network
+QT       += core gui network sql printsupport charts
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,12 +16,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    aihelper.cpp \
     connection.cpp \
     evenements.cpp \
     main.cpp \
     gevent.cpp
 
 HEADERS += \
+    aihelper.h \
     connection.h \
     evenements.h \
     gevent.h
@@ -55,4 +60,5 @@ DISTFILES += \
     image.qrc/3-removebg-preview (1).png \
     image.qrc/4-removebg-preview (1).png \
     image.qrc/5-removebg-preview (1).png \
-    image.qrc/6-removebg-preview (1).png
+    image.qrc/6-removebg-preview (1).png \
+    image.qrc/meteo.png
