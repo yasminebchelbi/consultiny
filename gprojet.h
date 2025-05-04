@@ -5,6 +5,7 @@
 #include <QtCharts>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include"arduino.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ public:
     Gprojet(QWidget *parent = nullptr);
     ~Gprojet();
     QSqlTableModel *model;
+    //void lireDonnees();
 
 private slots:
 
@@ -57,12 +59,12 @@ private slots:
     void handleNetworkReply(QNetworkReply* reply);
 
     void on_txtQuestion_returnPressed();
-
-    void on_fullscreen_clicked();
-
 private:
     Ui::Gprojet *ui;
     Projets P;
     QNetworkAccessManager *manager;
+    QByteArray data; // variable contenant les données reçues
+    Arduino *A;
+    QSerialPort *serial;
 };
 #endif // GPROJET_H

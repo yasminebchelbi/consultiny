@@ -33,6 +33,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include"arduino.h"
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 
 
@@ -45,6 +48,7 @@ Gprojet::Gprojet(QWidget *parent)
     ,manager(new QNetworkAccessManager(this))
 {
     ui->setupUi(this);
+
     ui->tableView->setModel(P.afficher());
     //pour mettre a l'utulisateur de fiare des modifications sur le tableau
     ui->tableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed);
@@ -65,16 +69,45 @@ Gprojet::Gprojet(QWidget *parent)
 
         exporterProjetsTexte();
         afficherStatistiquesStatus() ;
+        A = new Arduino();
+        QObject::connect(A->getserial(), &QSerialPort::readyRead, this, [this]() {
+            A->readFromArduino();
+        });
+
+
+        int ret = A->connect_arduino();  // Lancer la connexion à Arduino
+
+        // Traitement du résultat de la connexion
+        switch (ret) {
+        case 0:  // Connexion réussie
+            qDebug() << "Arduino is available and connected to:" << A->getarduino_port_name();
+            break;
+        case 1:  // Arduino est disponible mais la connexion a échoué
+            qDebug() << "Arduino is available but not connected to:" << A->getarduino_port_name();
+            break;
+        case -1: // Arduino n'est pas disponible
+            qDebug() << "Arduino is not available";
+            break;
+        default:
+            qDebug() << "Unknown error";
+            break;
+        }
+
+
+
 
 
 }
+
+
 
 
 Gprojet::~Gprojet()
 {
     delete ui;
+    delete A;
 }
-//****************************************Controle de saisie****************************************************************
+
 void Gprojet::verifierChamps()
 {
     bool nomValide = !ui->lineEdit_nom->text().trimmed().isEmpty();
@@ -977,7 +1010,7 @@ void Gprojet::on_txtQuestion_returnPressed() {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     // 🔐 Ajoute ta clé ici
-    request.setRawHeader("Authorization", "Bearer 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");
+    request.setRawHeader("Authorization", "Bearer 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");
     request.setRawHeader("HTTP-Referer", "https://consultini.tn");
     request.setRawHeader("Consultiny Bot", "Consultiny Chat");
 
@@ -1022,12 +1055,12 @@ void Gprojet::on_btnEnvoyer_clicked()
 {
     QString userInput = ui->txtQuestion->text().trimmed().toLower();
 
-    // 🔍 Vérifier si l'utilisateur demande une image spécifique
+    //  Vérifier si l'utilisateur demande une image spécifique
     QRegularExpression reImage("donne moi l'image de (\\w+)", QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch matchImage = reImage.match(userInput);
 
     if (matchImage.hasMatch()) {
-        QString imageName = matchImage.captured(1).toLower();  // Nom de l'image demandée
+        QString imageName = matchImage.captured(1).toLower();
         QStringList extensions = {"jpg", "jpeg", "png", "gif", "jfif"};  // Liste des extensions possibles
         bool imageFound = false;
 
@@ -1058,7 +1091,7 @@ void Gprojet::on_btnEnvoyer_clicked()
 }
 }
 
-void Gprojet::on_fullscreen_clicked()
+/*void Gprojet::on_fullscreen_clicked()
 {
     this->showFullScreen();
     ui->tabWidget->setGeometry(0, 0, this->width(), this->height());  // Redimensionner le QTabWidget pour qu'il prenne toute la fenêtre
@@ -1066,5 +1099,5 @@ void Gprojet::on_fullscreen_clicked()
         QWidget *tabWidget = ui->tabWidget->widget(i);
         tabWidget->setGeometry(0, 0, this->width(), this->height());
     }
-}
+}*/
 
