@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../Users/dhiab/Downloads/8025532-removebg-preview.png</file>
+        <file>../../Users/dhiab/Downloads/loupe-et-icone-de-recherche-de-couleur-grise.png</file>
+        <file>images/supp.png</file>
+        <file>images/telech.png</file>
+        <file>images/update.png</file>
+
+
+        
+    </qresource>
+</RCC>
