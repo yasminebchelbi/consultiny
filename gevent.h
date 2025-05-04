@@ -4,6 +4,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QMainWindow>
+#include "arduino.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -57,6 +58,8 @@ private slots:
     void ajouterEvenement();
     void modifierEvenement();
     void supprimerEvenement();
+    void updateScoreFromArduino();
+
 
 
     void on_supprimer_evenement_2_clicked();
@@ -81,11 +84,18 @@ private slots:
 
     void on_rejeter_flyer_clicked();
 
+    void on_lancerVote_clicked();
+
+
+
+    void on_terminerVote_clicked();
+
 private:
     Ui::Gevent *ui;
     Evenements etmp;
     QImage currentEventFlyer;
-    int currentEventId;
+    int currentEventId=-1;
+
 
     int currentSelectedEventID = -1;
     QPixmap currentFlyer;
@@ -98,6 +108,13 @@ private:
     void generateAdvice(const QJsonObject& weatherData, const QString& location, const QString& lieu);
     //void fetchCurrentWeather(const QString& location, const QString& lieu);
     //oid onCurrentWeatherReceived(QNetworkReply* reply);
+    //arduino
+    QByteArray data; // variable contenant les données reçues
+
+    //Arduino A; // objet temporaire
+    int currentScore = 0;
+    QTimer *arduinoTimer;
+     Arduino arduino;
 
 
 

@@ -5,7 +5,7 @@ QT       += printsupport
 QT       += charts
 QT       +=core gui network
 QT       += core gui network sql printsupport charts
-
+QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +17,7 @@ CONFIG += c++17
 
 SOURCES += \
     aihelper.cpp \
+    arduino.cpp \
     connection.cpp \
     evenements.cpp \
     main.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     aihelper.h \
+    arduino.h \
     connection.h \
     evenements.h \
     gevent.h

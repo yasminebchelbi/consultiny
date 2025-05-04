@@ -23,7 +23,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFileDialog>
-
+#include<QThread>
+#include "arduino.h"
 Gevent::Gevent(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Gevent)
@@ -31,6 +32,20 @@ Gevent::Gevent(QWidget *parent)
 
 {
     ui->setupUi(this);
+
+    //arduino
+    int ret=arduino.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< arduino.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<arduino.getarduino_port_name();
+        break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+    //arduinoTimer = new QTimer(this);
+    //connect(arduinoTimer, &QTimer::timeout, this, &Gevent::updateScoreFromArduino);
+    //arduinoTimer->start(200); // appel toutes les 200 ms
+
 
     // Debug SQL drivers
     qDebug() << "Drivers SQL disponibles :" << QSqlDatabase::drivers();
@@ -56,6 +71,9 @@ Gevent::Gevent(QWidget *parent)
 
     // Weather connections
     connect(ui->adviceButton, &QPushButton::clicked, this, &Gevent::on_adviceButton_clicked);
+    //arduino
+    //connect(&arduino, &Arduino::dataReceived, this, &Gevent::updateScoreFromArduino);
+
 }
 Gevent::~Gevent()
 {
@@ -1211,4 +1229,308 @@ void Gevent::on_update_evenement_clicked()
         ui->affichage_flyer->setPixmap(QPixmap::fromImage(currentEventFlyer).scaled(
             ui->affichage_flyer->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
+/*************************arduinino*/
+/*    void Gevent::on_lancerVote_clicked()
+    {
+        // Première étape : Lancer le vote
+        QModelIndex index = ui->tableView->currentIndex();
+        if (!index.isValid()) {
+            QMessageBox::warning(this, "Erreur", "Veuillez sélectionner un événement pour lancer le vote.");
+            return;
+        }
 
+        int row = index.row();
+        QModelIndex idIndex = ui->tableView->model()->index(row, 0);
+        QModelIndex nomIndex = ui->tableView->model()->index(row, 1);
+        QModelIndex nbrIndex = ui->tableView->model()->index(row, 4);
+
+        currentEventId = ui->tableView->model()->data(idIndex).toInt();  // 🔥 On mémorise ici l'ID
+        QString nomEvenement = ui->tableView->model()->data(nomIndex).toString();
+        int nbParticipants = ui->tableView->model()->data(nbrIndex).toInt();
+
+        QString message = "START:" + nomEvenement + ":" + QString::number(nbParticipants) + "\r\n";
+        qDebug() << "Message envoyé:" << message.toUtf8();
+
+        arduino.write_to_arduino(message.toUtf8());  // Envoi du message à Arduino pour démarrer le vote
+
+
+        QMessageBox::information(this, "Vote", "Le vote a été lancé pour l'événement : " + nomEvenement);
+
+        // Deuxième étape : Recevoir et traiter le message de l'Arduino
+        QByteArray data = arduino.read_from_arduino();
+        QString arduinoMessage = QString::fromUtf8(data).trimmed();
+
+        if (arduinoMessage.isEmpty()) return;
+
+        qDebug() << "Message reçu de l'Arduino:" << arduinoMessage;
+
+        // Si on reçoit "FINISHED:scoreFinal"
+        if (arduinoMessage.startsWith("FINISHED:")) {
+            int scoreFinal = arduinoMessage.section(':', 1, 1).toInt();
+            QMessageBox::information(this, "Vote terminé", "Le vote est terminé.\nScore final : " + QString::number(scoreFinal));
+            return;
+        }
+
+        // Analyser le message reçu
+        int scoreChange = 0;
+        if (arduinoMessage == "PLUS") scoreChange = 1;
+        else if (arduinoMessage == "EQUAL") scoreChange = 0;
+        else if (arduinoMessage == "MINUS") scoreChange = -1;
+        else {
+            qDebug() << "Message inconnu reçu, ignoré.";
+            return;
+        }
+
+        // Vérifier que l'événement est bien sélectionné
+        if (currentEventId == -1) {
+            qDebug() << "Aucun événement sélectionné pour le vote.";
+            return;
+        }
+
+        // Lire l'événement actuel dans la base
+        QSqlQuery query;
+        query.prepare("SELECT score_evenement, NBR_PARTICIPANTS_EVENEMENT FROM evenements WHERE id_evenement = :id");
+        query.bindValue(":id", currentEventId);
+
+        if (query.exec() && query.next()) {
+            int currentScore = query.value(0).toInt();
+            int maxVotes = query.value(1).toInt();
+
+            int newScore = currentScore + scoreChange;
+            newScore = qBound(0, newScore, maxVotes);
+
+            // Mettre à jour le score
+            QSqlQuery updateQuery;
+            updateQuery.prepare("UPDATE evenements SET score_evenement = :score WHERE id_evenement = :id");
+            updateQuery.bindValue(":score", newScore);
+            updateQuery.bindValue(":id", currentEventId);
+
+            if (!updateQuery.exec()) {
+                qDebug() << "Erreur lors de la mise à jour du score:" << updateQuery.lastError().text();
+                return;
+            }
+
+            qDebug() << "Score mis à jour dans la base : " << newScore;
+
+            // Rafraîchir l'affichage
+            ui->tableView->setModel(etmp.afficher_evenements());
+
+            // Si score maximum atteint, bloquer
+            if (newScore >= maxVotes) {
+                qDebug() << "Score maximum atteint, envoi du blocage à Arduino.";
+                arduino.write_to_arduino("BLOCK\n");
+            }
+        } else {
+            qDebug() << "Erreur lors de la récupération de l'événement:" << query.lastError().text();
+        }
+    }
+*/
+    /*
+ void Gevent::updateScoreFromArduino()
+    {
+        QByteArray data = arduino.read_from_arduino();
+        QString message = QString::fromUtf8(data).trimmed();
+
+        if (message.isEmpty()) return;
+
+        qDebug() << "Message reçu de l'Arduino:" << message;
+
+        // Si on reçoit "FINISHED:scoreFinal"
+        if (message.startsWith("FINISHED:")) {
+            int scoreFinal = message.section(':', 1, 1).toInt();
+            QMessageBox::information(this, "Vote terminé", "Le vote est terminé.\nScore final : " + QString::number(scoreFinal));
+            return;
+        }
+
+        // Analyser le message reçu
+        int scoreChange = 0;
+        if (message == "PLUS") scoreChange = 1;
+        else if (message == "EQUAL") scoreChange = 0;
+        else if (message == "MINUS") scoreChange = -1;
+        else {
+            qDebug() << "Message inconnu reçu, ignoré.";
+            return;
+        }
+
+        // Vérifier que l'événement est bien sélectionné
+        if (currentEventId == -1) {
+            qDebug() << "Aucun événement sélectionné pour le vote.";
+            return;
+        }
+
+        // Lire l'événement actuel dans la base
+        QSqlQuery query;
+        query.prepare("SELECT score_evenement, NBR_PARTICIPANTS_EVENEMENT FROM evenements WHERE id_evenement = :id");
+        query.bindValue(":id", currentEventId);
+
+        if (query.exec() && query.next()) {
+            int currentScore = query.value(0).toInt();
+            int maxVotes = query.value(1).toInt();
+
+            int newScore = currentScore + scoreChange;
+            newScore = qBound(0, newScore, maxVotes);
+
+            // Mettre à jour le score
+            QSqlQuery updateQuery;
+            updateQuery.prepare("INSERT score_evenement INTO EVENEMENTS  = :score WHERE id_evenement = :id");
+            updateQuery.bindValue(":score", newScore);
+            updateQuery.bindValue(":id", currentEventId);
+
+            if (!updateQuery.exec()) {
+                qDebug() << "Erreur lors de la mise à jour du score:" << updateQuery.lastError().text();
+                return;
+            }
+
+            qDebug() << "Score mis à jour dans la base : " << newScore;
+
+            // Rafraîchir l'affichage
+            ui->tableView->setModel(etmp.afficher_evenements());
+
+            // Si score maximum atteint, bloquer
+            if (newScore >= maxVotes) {
+                qDebug() << "Score maximum atteint, envoi du blocage à Arduino.";
+                arduino.write_to_arduino("BLOCK\n");
+            }
+        } else {
+            qDebug() << "Erreur lors de la récupération de l'événement:" << query.lastError().text();
+        }
+    }
+
+
+    void Gevent::on_lancerVote_clicked()
+    {
+        QModelIndex index = ui->tableView->currentIndex();
+        if (!index.isValid()) {
+            QMessageBox::warning(this, "Erreur", "Veuillez sélectionner un événement pour lancer le vote.");
+            return;
+        }
+
+        int row = index.row();
+        QModelIndex idIndex = ui->tableView->model()->index(row, 0);
+        QModelIndex nomIndex = ui->tableView->model()->index(row, 1);
+        QModelIndex nbrIndex = ui->tableView->model()->index(row, 4);
+
+        currentEventId = ui->tableView->model()->data(idIndex).toInt();  // 🔥 On mémorise ici l'ID
+        QString nomEvenement = ui->tableView->model()->data(nomIndex).toString();
+        int nbParticipants = ui->tableView->model()->data(nbrIndex).toInt();
+
+        QString message = "START:" +nomEvenement + ":" + QString::number(nbParticipants)+ "\r\n";
+        qDebug() << "Message envoyé:" << message.toUtf8();
+
+        arduino.write_to_arduino(message.toUtf8());
+        QThread::msleep(500);
+        QByteArray reponse1 = arduino.read_from_arduino();
+        qDebug() << "Réponse de l'Arduino: " << reponse1;
+
+        QMessageBox::information(this, "Vote", "Le vote a été lancé pour l'événement : " + nomEvenement);
+
+        // Test de communication (optionnel)
+       //A.write_to_arduino("Hello\n");
+       //QByteArray reponse = A.read_from_arduino();
+        //qDebug() << "Réponse de l'Arduino: " << reponse;
+    }
+*/
+    //test2
+   void Gevent::updateScoreFromArduino() {
+        QByteArray data = arduino.read_from_arduino();
+        QString message = QString::fromUtf8(data).trimmed();
+
+        qDebug() << "RAW DATA:" << data.toHex();
+        qDebug() << "Message:" << message;
+
+        if (message.startsWith("FINISHED:")) {
+            QString scoreStr = message.mid(9).trimmed();
+            bool ok;
+            int score = scoreStr.toInt(&ok);
+
+            if (!ok) {
+                qDebug() << "Invalid score received:" << scoreStr;
+                return;
+            }
+
+            qDebug() << "Parsed score:" << score;
+
+            // Vérification que l'ID événement est valide
+            if (currentEventId <= 0) {
+                qDebug() << "Invalid event ID:" << currentEventId;
+                return;
+            }
+
+            // REQUÊTE PRÉPARÉE
+            QSqlQuery query;
+            query.prepare("UPDATE evenements SET score_evenement = ? WHERE id_evenement = ?");
+            query.addBindValue(score);
+            query.addBindValue(currentEventId);
+
+            if (!query.exec()) {
+                qDebug() << "SQL Error:" << query.lastError().text();
+                QMessageBox::critical(this, "Erreur",
+                                      "Échec de sauvegarde: " + query.lastError().text());
+            } else {
+                qDebug() << "Score saved successfully";
+                ui->tableView->setModel(etmp.afficher_evenements());
+            }
+        }
+    }
+    void Gevent::on_lancerVote_clicked() {
+        QModelIndex index = ui->tableView->currentIndex();
+        if (!index.isValid()) {
+            QMessageBox::warning(this, "Erreur", "Sélectionnez un événement");
+            return;
+        }
+
+        int row = index.row();
+        currentEventId = ui->tableView->model()->index(row, 0).data().toInt();
+        QString nomEvenement = ui->tableView->model()->index(row, 1).data().toString();
+        int participants = ui->tableView->model()->index(row, 4).data().toInt();
+
+        QString command = QString("START:%1:%2\n").arg(nomEvenement).arg(participants);
+        arduino.write_to_arduino(command.toUtf8());
+
+        // Attendre la confirmation
+        QElapsedTimer timer;
+        timer.start();
+        while (timer.elapsed() < 3000) { // Timeout 3 sec
+            QCoreApplication::processEvents();
+            if (arduino.read_from_arduino().contains("ACK:START")) {
+                break;
+            }
+        }
+
+        QMessageBox::information(this, "Vote", "Vote lancé pour:\n" + nomEvenement);
+    }
+
+    void Gevent::on_terminerVote_clicked() {
+        // Demander le score final
+        arduino.write_to_arduino("GETSCORE\n");
+
+        // Lire la réponse
+        QByteArray response;
+        QElapsedTimer timer;
+        timer.start();
+        while (timer.elapsed() < 3000) { // Timeout 3 sec
+            QCoreApplication::processEvents();
+            response = arduino.read_from_arduino();
+            if (response.startsWith("SCORE:")) {
+                break;
+            }
+        }
+
+        if (response.startsWith("SCORE:")) {
+            int score = response.split(':')[1].toInt();
+
+            QSqlQuery query;
+            query.prepare("UPDATE evenements SET score_evenement = ? WHERE id_evenement = ?");
+            query.addBindValue(score);
+            query.addBindValue(currentEventId);
+
+            if (query.exec()) {
+                QMessageBox::information(this, "Succès", QString("Score %1% enregistré").arg(score));
+                ui->tableView->setModel(etmp.afficher_evenements());
+            } else {
+                QMessageBox::critical(this, "Erreur","Échec de l'enregistrement: " + query.lastError().text());
+            }
+        } else {
+            QMessageBox::warning(this, "Erreur", "Aucune réponse de l'Arduino");
+        }
+    }

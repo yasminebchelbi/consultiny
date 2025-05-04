@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>image.qrc/vote.png</file>
         <file>image.qrc/logo.png</file>
         <file>image.qrc/flyer.png</file>
         <file>image.qrc/edit.png</file>
@@ -49,7 +50,6 @@
         <file>image.qrc/softSkills_bg.png</file>
         <file>image.qrc/softSkills_bg1.png</file>
         <file>image.qrc/softSkills_bg2.png</file>
-
 
 
 

@@ -84,7 +84,7 @@ QSqlTableModel *Evenements::afficher_evenements() {
     qDebug() << "afficher_evenements() appelée";
     QSqlTableModel * model = new QSqlTableModel();
 
-    model->setQuery("SELECT ID_EVENEMENT,NOM_EVENEMENT, DATE_DEBUT_EVENEMENT, DATE_FIN_EVENEMENT, NBR_PARTICIPANTS_EVENEMENT, ADRESSE_EEVENEMENT, DESCRIPTION_EVENEMENT, TYPE_EVENEMENT, LIEU_EVENEMENT FROM evenements") ;
+    model->setQuery("SELECT ID_EVENEMENT,NOM_EVENEMENT, DATE_DEBUT_EVENEMENT, DATE_FIN_EVENEMENT, NBR_PARTICIPANTS_EVENEMENT, ADRESSE_EEVENEMENT, DESCRIPTION_EVENEMENT, TYPE_EVENEMENT, LIEU_EVENEMENT, SCORE_EVENEMENT FROM evenements") ;
 
     // Définir les en-têtes des colonnes
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
@@ -96,6 +96,8 @@ QSqlTableModel *Evenements::afficher_evenements() {
     model->setHeaderData(6, Qt::Horizontal, QObject::tr("description"));
     model->setHeaderData(7, Qt::Horizontal, QObject::tr("type"));
     model->setHeaderData(8, Qt::Horizontal, QObject::tr("lieu"));
+    model->setHeaderData(9, Qt::Horizontal, QObject::tr("score"));
+
 
     //return model;
     if (model->lastError().isValid()) {
