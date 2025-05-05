@@ -1,0 +1,14 @@
+debug/access.o
+debug/connection.o
+debug/employe.o
+debug/gemploye.o
+debug/main.o
+debug/menu.o
+debug/oublie.o
+debug/changemdpdialog.o
+debug/qrc_img.o
+debug/moc_access.o
+debug/moc_gemploye.o
+debug/moc_menu.o
+debug/moc_oublie.o
+debug/moc_changemdpdialog.o

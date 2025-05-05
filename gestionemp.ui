@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>gestionemp</class>
+ <widget class="QWidget" name="gestionemp">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1389</width>
+    <height>933</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1651</width>
+     <height>901</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Shape::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Shadow::Raised</enum>
+   </property>
+   <widget class="QLineEdit" name="lineEdit_4">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>50</y>
+      <width>291</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    font-family: &quot;Poppins&quot;, &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
+    background-color: #E8E3DD;
+    border: 1px solid #838db1;
+    border-radius: 5px;
+    padding: 4px;
+    color: #263A69;
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="trie_employe">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>60</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QComboBox {
+    font-family: &quot;Poppins&quot;, &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
+    color: #263A69;
+    background-color: #E8E3DD;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+QComboBox QAbstractItemView {
+    color: black;  /* Couleur du texte des options en noir */
+    background-color: #E8E3DD;  /* Conserve la couleur de fond */
+    selection-background-color: #263A69;  /* Couleur de fond de l'option sélectionnée */
+    selection-color: white;  /* Couleur du texte de l'option sélectionnée */
+}</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>plus réc.</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>plus anc.</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="chercher_employe">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>50</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #1E88E5, stop:1 #0D47A1); /* Dégradé de bleu */
+    border: 2px solid #0D47A1;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #0D47A1, stop:1 #1E88E5); /* Inversion du dégradé */
+    border: 2px solid #1E88E5;
+}
+
+QPushButton:pressed {
+    background-color: #1565C0; /* Couleur plus foncée au clic */
+    border: 2px solid #1565C0;
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::EditFind"/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="telech_employe">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>50</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #6f7dab, stop:1 #3f5d7b); /* Dégradé bleu foncé */
+    border: 2px solid #3f5d7b;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #3f5d7b, stop:1 #6f7dab); /* Inversion du dégradé */
+    border: 2px solid #6f7dab;
+}
+
+QPushButton:pressed {
+    background-color: #354f73; /* Couleur plus foncée au clic */
+    border: 2px solid #354f73;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>380</y>
+      <width>1001</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="statsLayout">
+     <item>
+      <widget class="QComboBox" name="statsTypeCombo">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	background-color: rgb(0, 0, 127);
+    font-family: &quot;Poppins&quot;, &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
+    background-color: #E8E3DD;
+    border: 1px solid #838db1;
+    border-radius: 5px;
+    padding: 4px;
+    color: #263A69;
+}
+</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="deconnexion_button">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>50</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #E53935, stop:1 #B71C1C); /* Dégradé de rouge */
+    border: 2px solid #B71C1C;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+                stop:0 #B71C1C, stop:1 #E53935); /* Inversion du dégradé */
+    border: 2px solid #E53935;
+}
+
+QPushButton:pressed {
+    background-color: #C62828; /* Couleur plus foncée au clic */
+    border: 2px solid #C62828;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Déconnexion</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>-100</x>
+      <y>250</y>
+      <width>391</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>:/Desktop/Employee - Copy/image.qrc/8025532-removebg-preview.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableview_employe">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>100</y>
+      <width>871</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTableView {
+    background-color: #EDECEA; /* Fond du tableau */
+    border: 2px solid #838DB1; /* Bordure subtile */
+    border-radius: 10px; /* Arrondi */
+    gridline-color: #DCDCDA; /* Couleur des lignes du tableau */
+    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif; /* Typographie moderne */
+    font-size: 14px;
+    selection-background-color: #838DB1; /* Couleur de sélection */
+    selection-color: white; /* Texte en blanc sur sélection */
+}
+
+QHeaderView::section {
+    background-color: #263A69; /* En-têtes foncés */
+    color: white; /* Texte blanc */
+    padding: 8px;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+QTableView::item {
+    padding: 6px;
+    border-bottom: 1px solid #E8E3DD; /* Séparation entre les lignes */
+}
+
+QTableView::item:selected {
+    background-color: #838DB1; /* Fond des éléments sélectionnés */
+    color: white;
+}
+</string>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <property name="columnCount">
+     <number>9</number>
+    </property>
+    <column>
+     <property name="text">
+      <string>Id</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Nom</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Prenom</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>D.naissance</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Mail</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Telephone</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Adresse</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>D.embauche</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Poste</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="trie_button">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>60</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 141, 177);
+font: 600 12pt &quot;Segoe UI&quot;;
+color: rgb(38, 58, 105);</string>
+    </property>
+    <property name="text">
+     <string>Trier</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

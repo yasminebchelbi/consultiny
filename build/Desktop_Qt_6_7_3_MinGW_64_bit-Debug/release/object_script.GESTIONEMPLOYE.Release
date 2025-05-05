@@ -1,0 +1,14 @@
+release/access.o
+release/connection.o
+release/employe.o
+release/gemploye.o
+release/main.o
+release/menu.o
+release/oublie.o
+release/changemdpdialog.o
+release/qrc_img.o
+release/moc_access.o
+release/moc_gemploye.o
+release/moc_menu.o
+release/moc_oublie.o
+release/moc_changemdpdialog.o
