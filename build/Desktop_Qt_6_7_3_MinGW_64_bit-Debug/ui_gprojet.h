@@ -90,12 +90,12 @@ public:
     {
         if (Gprojet->objectName().isEmpty())
             Gprojet->setObjectName("Gprojet");
-        Gprojet->resize(1032, 612);
+        Gprojet->resize(1373, 833);
         centralwidget = new QWidget(Gprojet);
         centralwidget->setObjectName("centralwidget");
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(10, 10, 1011, 581));
+        tabWidget->setGeometry(QRect(10, 10, 1341, 671));
         tabWidget->setStyleSheet(QString::fromUtf8("/* Style du QTabWidget */\n"
 "QTabWidget::pane {\n"
 "    border: 1px solid ;\n"
@@ -124,7 +124,7 @@ public:
         tab->setObjectName("tab");
         frame = new QFrame(tab);
         frame->setObjectName("frame");
-        frame->setGeometry(QRect(10, 60, 321, 461));
+        frame->setGeometry(QRect(10, 60, 321, 541));
         frame->setStyleSheet(QString::fromUtf8("QWidget { \n"
 "    background-color: #EDECEA;\n"
 "    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
@@ -210,56 +210,56 @@ public:
         frame->setFrameShadow(QFrame::Shadow::Raised);
         label = new QLabel(frame);
         label->setObjectName("label");
-        label->setGeometry(QRect(20, 20, 63, 20));
+        label->setGeometry(QRect(20, 30, 63, 20));
         label_2 = new QLabel(frame);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(20, 50, 91, 20));
+        label_2->setGeometry(QRect(10, 70, 91, 20));
         label_4 = new QLabel(frame);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(20, 80, 81, 20));
+        label_4->setGeometry(QRect(20, 110, 81, 20));
         label_5 = new QLabel(frame);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(20, 110, 63, 20));
+        label_5->setGeometry(QRect(20, 150, 63, 20));
         label_6 = new QLabel(frame);
         label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(20, 210, 111, 20));
+        label_6->setGeometry(QRect(10, 270, 111, 20));
         label_8 = new QLabel(frame);
         label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(20, 140, 81, 20));
+        label_8->setGeometry(QRect(20, 190, 81, 20));
         label_9 = new QLabel(frame);
         label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(20, 170, 91, 20));
+        label_9->setGeometry(QRect(20, 230, 91, 20));
         dateTimeEdit = new QDateTimeEdit(frame);
         dateTimeEdit->setObjectName("dateTimeEdit");
-        dateTimeEdit->setGeometry(QRect(120, 50, 181, 29));
+        dateTimeEdit->setGeometry(QRect(130, 70, 181, 29));
         lineEdit_nom = new QLineEdit(frame);
         lineEdit_nom->setObjectName("lineEdit_nom");
-        lineEdit_nom->setGeometry(QRect(120, 20, 181, 28));
+        lineEdit_nom->setGeometry(QRect(130, 30, 181, 28));
         ajouter_projet = new QPushButton(frame);
         ajouter_projet->setObjectName("ajouter_projet");
-        ajouter_projet->setGeometry(QRect(30, 420, 83, 29));
+        ajouter_projet->setGeometry(QRect(40, 470, 83, 29));
         annuler_projet = new QPushButton(frame);
         annuler_projet->setObjectName("annuler_projet");
-        annuler_projet->setGeometry(QRect(220, 420, 83, 29));
+        annuler_projet->setGeometry(QRect(220, 470, 83, 29));
         plainTextEdit_description = new QPlainTextEdit(frame);
         plainTextEdit_description->setObjectName("plainTextEdit_description");
-        plainTextEdit_description->setGeometry(QRect(20, 250, 281, 161));
+        plainTextEdit_description->setGeometry(QRect(70, 300, 241, 131));
         lineEdit_cout = new QLineEdit(frame);
         lineEdit_cout->setObjectName("lineEdit_cout");
-        lineEdit_cout->setGeometry(QRect(120, 140, 181, 28));
+        lineEdit_cout->setGeometry(QRect(130, 190, 181, 28));
         lineEdit_cout->setMaxLength(10);
         lineEdit_adresse = new QLineEdit(frame);
         lineEdit_adresse->setObjectName("lineEdit_adresse");
-        lineEdit_adresse->setGeometry(QRect(120, 170, 181, 28));
+        lineEdit_adresse->setGeometry(QRect(130, 230, 181, 28));
         lineEdit_budget = new QLineEdit(frame);
         lineEdit_budget->setObjectName("lineEdit_budget");
-        lineEdit_budget->setGeometry(QRect(120, 80, 181, 28));
+        lineEdit_budget->setGeometry(QRect(130, 110, 181, 28));
         lineEdit_secteur = new QLineEdit(frame);
         lineEdit_secteur->setObjectName("lineEdit_secteur");
-        lineEdit_secteur->setGeometry(QRect(120, 110, 181, 28));
+        lineEdit_secteur->setGeometry(QRect(130, 150, 181, 28));
         recherche_projet = new QLineEdit(tab);
         recherche_projet->setObjectName("recherche_projet");
-        recherche_projet->setGeometry(QRect(240, 10, 171, 41));
+        recherche_projet->setGeometry(QRect(350, 10, 171, 41));
         recherche_projet->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #f5f5f5; /* Fond clair et \303\251pur\303\251 */\n"
 "    border: 2px solid #6f7dab; /* Bordure bleu-gris */\n"
@@ -285,7 +285,7 @@ public:
         trier_projet->addItem(QString());
         trier_projet->addItem(QString());
         trier_projet->setObjectName("trier_projet");
-        trier_projet->setGeometry(QRect(910, 20, 101, 28));
+        trier_projet->setGeometry(QRect(1090, 20, 101, 28));
         trier_projet->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #E8E3DD; /* Couleur de fond clair */\n"
 "    border: 2px solid #D1C8B9; /* Bordure subtile */\n"
@@ -329,7 +329,7 @@ public:
         label_12->setGeometry(QRect(390, 370, 49, 16));
         pushButton_7 = new QPushButton(tab);
         pushButton_7->setObjectName("pushButton_7");
-        pushButton_7->setGeometry(QRect(20, 10, 201, 31));
+        pushButton_7->setGeometry(QRect(20, 10, 251, 41));
         pushButton_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -351,7 +351,7 @@ public:
         pushButton_7->setIconSize(QSize(30, 30));
         label_14 = new QLabel(tab);
         label_14->setObjectName("label_14");
-        label_14->setGeometry(QRect(840, 410, 191, 131));
+        label_14->setGeometry(QRect(1130, 520, 191, 131));
         label_14->setStyleSheet(QString::fromUtf8("QLabel#logoLabel {\n"
 "    border: none;\n"
 "    background: transparent;\n"
@@ -360,7 +360,7 @@ public:
         label_14->setScaledContents(true);
         tableView = new QTableView(tab);
         tableView->setObjectName("tableView");
-        tableView->setGeometry(QRect(340, 70, 661, 191));
+        tableView->setGeometry(QRect(350, 70, 911, 191));
         tableView->setStyleSheet(QString::fromUtf8("QTableView { \n"
 "    background-color: #EDECEA; /* Fond du tableau */\n"
 "    border: 2px solid #838DB1; /* Bordure subtile */\n"
@@ -395,7 +395,7 @@ public:
 ""));
         supprimer_projet = new QPushButton(tab);
         supprimer_projet->setObjectName("supprimer_projet");
-        supprimer_projet->setGeometry(QRect(750, 10, 51, 41));
+        supprimer_projet->setGeometry(QRect(920, 10, 51, 41));
         supprimer_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
 "                stop:0 #E53935, stop:1 #B71C1C); /* D\303\251grad\303\251 de rouge */\n"
@@ -427,7 +427,7 @@ public:
         supprimer_projet->setChecked(false);
         update_projet = new QPushButton(tab);
         update_projet->setObjectName("update_projet");
-        update_projet->setGeometry(QRect(630, 10, 51, 41));
+        update_projet->setGeometry(QRect(790, 10, 51, 41));
         update_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
 "                stop:0 #0daa90, stop:1 #388E3C); /* D\303\251grad\303\251 de vert */\n"
@@ -461,7 +461,7 @@ public:
         update_projet->setFlat(false);
         recherche_projet_2 = new QPushButton(tab);
         recherche_projet_2->setObjectName("recherche_projet_2");
-        recherche_projet_2->setGeometry(QRect(420, 10, 51, 41));
+        recherche_projet_2->setGeometry(QRect(550, 10, 51, 41));
         recherche_projet_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
 "                stop:0 #6f7dab, stop:1 #5b6d96); /* D\303\251grad\303\251 bleu-gris */\n"
@@ -504,7 +504,7 @@ public:
         recherche_projet_2->setIconSize(QSize(30, 30));
         telecharger_projet = new QPushButton(tab);
         telecharger_projet->setObjectName("telecharger_projet");
-        telecharger_projet->setGeometry(QRect(690, 10, 51, 41));
+        telecharger_projet->setGeometry(QRect(850, 10, 51, 41));
         telecharger_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
 "                stop:0 #6f7dab, stop:1 #3f5d7b); /* D\303\251grad\303\251 bleu fonc\303\251 */\n"
@@ -535,7 +535,7 @@ public:
         telecharger_projet->setIconSize(QSize(30, 30));
         trier_projet_2 = new QPushButton(tab);
         trier_projet_2->setObjectName("trier_projet_2");
-        trier_projet_2->setGeometry(QRect(810, 10, 101, 51));
+        trier_projet_2->setGeometry(QRect(980, 10, 101, 51));
         trier_projet_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
 "    font-size: 12px;                 /* Taille du texte */\n"
@@ -563,7 +563,7 @@ public:
 ""));
         frame_stat = new QFrame(tab);
         frame_stat->setObjectName("frame_stat");
-        frame_stat->setGeometry(QRect(370, 290, 461, 211));
+        frame_stat->setGeometry(QRect(370, 290, 791, 311));
         frame_stat->setStyleSheet(QString::fromUtf8("QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
 "    border-radius: 15px; /* Coins arrondis */\n"
@@ -573,7 +573,7 @@ public:
         frame_stat->setFrameShadow(QFrame::Shadow::Raised);
         refresh_projet = new QPushButton(tab);
         refresh_projet->setObjectName("refresh_projet");
-        refresh_projet->setGeometry(QRect(480, 10, 51, 41));
+        refresh_projet->setGeometry(QRect(610, 10, 51, 41));
         refresh_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \n"
 "                stop:0 #0daa90, stop:1 #388E3C); /* D\303\251grad\303\251 de vert */\n"
@@ -607,12 +607,12 @@ public:
         tab_2->setObjectName("tab_2");
         label_15 = new QLabel(tab_2);
         label_15->setObjectName("label_15");
-        label_15->setGeometry(QRect(860, 460, 181, 91));
+        label_15->setGeometry(QRect(1100, 520, 211, 131));
         label_15->setPixmap(QPixmap(QString::fromUtf8(":/Users/HP/Downloads/8025532-removebg-preview.png")));
         label_15->setScaledContents(true);
         frame_3 = new QFrame(tab_2);
         frame_3->setObjectName("frame_3");
-        frame_3->setGeometry(QRect(40, 40, 551, 361));
+        frame_3->setGeometry(QRect(40, 130, 631, 361));
         frame_3->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -649,10 +649,10 @@ public:
         frame_3->setFrameShadow(QFrame::Shadow::Raised);
         label_16 = new QLabel(frame_3);
         label_16->setObjectName("label_16");
-        label_16->setGeometry(QRect(160, 10, 241, 61));
+        label_16->setGeometry(QRect(220, 10, 241, 61));
         txtReponse = new QTextEdit(frame_3);
         txtReponse->setObjectName("txtReponse");
-        txtReponse->setGeometry(QRect(10, 170, 291, 121));
+        txtReponse->setGeometry(QRect(10, 170, 311, 121));
         txtReponse->setStyleSheet(QString::fromUtf8("#txtReponse {\n"
 "    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
 "    font-size: 14px;\n"
@@ -665,12 +665,12 @@ public:
         txtReponse->setReadOnly(true);
         image_projet = new QLabel(frame_3);
         image_projet->setObjectName("image_projet");
-        image_projet->setGeometry(QRect(300, 160, 241, 141));
+        image_projet->setGeometry(QRect(340, 160, 271, 141));
         image_projet->setSizeIncrement(QSize(300, 300));
         image_projet->setBaseSize(QSize(300, 300));
         annuler_conseil_projet = new QPushButton(frame_3);
         annuler_conseil_projet->setObjectName("annuler_conseil_projet");
-        annuler_conseil_projet->setGeometry(QRect(120, 20, 41, 41));
+        annuler_conseil_projet->setGeometry(QRect(180, 20, 41, 41));
         annuler_conseil_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -690,7 +690,7 @@ public:
         annuler_conseil_projet->setIcon(icon5);
         txtQuestion = new QLineEdit(frame_3);
         txtQuestion->setObjectName("txtQuestion");
-        txtQuestion->setGeometry(QRect(40, 100, 471, 51));
+        txtQuestion->setGeometry(QRect(70, 100, 471, 51));
         txtQuestion->setStyleSheet(QString::fromUtf8("#txtQuestion {\n"
 "    font-family: \"Poppins\", \"Arial\", sans-serif;\n"
 "    font-size: 14px;\n"
@@ -702,7 +702,7 @@ public:
 "}"));
         btnEnvoyer = new QPushButton(frame_3);
         btnEnvoyer->setObjectName("btnEnvoyer");
-        btnEnvoyer->setGeometry(QRect(410, 110, 91, 31));
+        btnEnvoyer->setGeometry(QRect(440, 110, 91, 31));
         btnEnvoyer->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -723,7 +723,7 @@ public:
         btnEnvoyer->setIcon(icon6);
         frame_2 = new QFrame(tab_2);
         frame_2->setObjectName("frame_2");
-        frame_2->setGeometry(QRect(620, 40, 371, 361));
+        frame_2->setGeometry(QRect(750, 130, 511, 361));
         frame_2->setStyleSheet(QString::fromUtf8("/* Style pour le QFrame avec fond fonc\303\251 et bords arrondis */\n"
 "QFrame {\n"
 "    background-color:  #6f7dab; /* Couleur de fond fonc\303\251e */\n"
@@ -759,11 +759,11 @@ public:
         frame_2->setFrameShadow(QFrame::Shadow::Raised);
         label_28 = new QLabel(frame_2);
         label_28->setObjectName("label_28");
-        label_28->setGeometry(QRect(70, 0, 211, 61));
+        label_28->setGeometry(QRect(70, 0, 381, 61));
         label_28->setStyleSheet(QString::fromUtf8(""));
         id_hist_projet = new QLineEdit(frame_2);
         id_hist_projet->setObjectName("id_hist_projet");
-        id_hist_projet->setGeometry(QRect(190, 80, 131, 31));
+        id_hist_projet->setGeometry(QRect(190, 80, 281, 31));
         id_hist_projet->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
 "    font-size: 8px;                 /* Taille du texte */\n"
@@ -799,7 +799,7 @@ public:
 "}"));
         hist_projet = new QPushButton(frame_2);
         hist_projet->setObjectName("hist_projet");
-        hist_projet->setGeometry(QRect(230, 310, 131, 31));
+        hist_projet->setGeometry(QRect(370, 310, 131, 31));
         hist_projet->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -825,7 +825,7 @@ public:
         label_21->setGeometry(QRect(40, 60, 141, 71));
         historique_projet = new QTextEdit(frame_2);
         historique_projet->setObjectName("historique_projet");
-        historique_projet->setGeometry(QRect(20, 150, 331, 131));
+        historique_projet->setGeometry(QRect(80, 140, 411, 131));
         historique_projet->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-family: Arial, sans-serif;  /* Police \303\251l\303\251gante */\n"
 "    font-size: 8px;                 /* Taille du texte */\n"
@@ -862,7 +862,7 @@ public:
         historique_projet->setReadOnly(true);
         anuuler_hist = new QPushButton(frame_2);
         anuuler_hist->setObjectName("anuuler_hist");
-        anuuler_hist->setGeometry(QRect(30, 310, 121, 31));
+        anuuler_hist->setGeometry(QRect(40, 310, 121, 31));
         anuuler_hist->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	font: 700 11pt \"Times New Roman\";\n"
 "	\n"
@@ -885,7 +885,7 @@ public:
         Gprojet->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Gprojet);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1032, 22));
+        menubar->setGeometry(QRect(0, 0, 1373, 22));
         Gprojet->setMenuBar(menubar);
         statusbar = new QStatusBar(Gprojet);
         statusbar->setObjectName("statusbar");
@@ -893,7 +893,7 @@ public:
 
         retranslateUi(Gprojet);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         update_projet->setDefault(false);
 
 
@@ -937,11 +937,11 @@ public:
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Poppins','Arial','sans-serif'; font-size:14px; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
-        image_projet->setText(QCoreApplication::translate("Gprojet", "         G\303\251n\303\251ration des images", nullptr));
+        image_projet->setText(QCoreApplication::translate("Gprojet", "               G\303\251n\303\251ration des images", nullptr));
         annuler_conseil_projet->setText(QString());
         txtQuestion->setText(QCoreApplication::translate("Gprojet", "Pose ta question \360\237\230\212  ", nullptr));
         btnEnvoyer->setText(QCoreApplication::translate("Gprojet", "G\303\251n\303\251rer", nullptr));
-        label_28->setText(QCoreApplication::translate("Gprojet", "       Historique du projet           ", nullptr));
+        label_28->setText(QCoreApplication::translate("Gprojet", "                                    Historique du projet           ", nullptr));
         hist_projet->setText(QCoreApplication::translate("Gprojet", "    Historique", nullptr));
         label_21->setText(QCoreApplication::translate("Gprojet", "Id_projet:", nullptr));
         anuuler_hist->setText(QCoreApplication::translate("Gprojet", "    Annuler", nullptr));

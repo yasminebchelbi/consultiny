@@ -70,20 +70,20 @@ Gprojet::Gprojet(QWidget *parent)
         exporterProjetsTexte();
         afficherStatistiquesStatus() ;
         A = new Arduino();
-        QObject::connect(A->getserial(), &QSerialPort::readyRead, this, [this]() {
+        QObject::connect(A->getserial1(), &QSerialPort::readyRead, this, [this]() {
             A->readFromArduino();
         });
 
 
-        int ret = A->connect_arduino();  // Lancer la connexion à Arduino
+        int ret1 = A->connect_arduino1();  // Lancer la connexion à Arduino
 
         // Traitement du résultat de la connexion
-        switch (ret) {
+        switch (ret1) {
         case 0:  // Connexion réussie
-            qDebug() << "Arduino is available and connected to:" << A->getarduino_port_name();
+            qDebug() << "Arduino is available and connected to:" << A->getarduino_port_name1();
             break;
         case 1:  // Arduino est disponible mais la connexion a échoué
-            qDebug() << "Arduino is available but not connected to:" << A->getarduino_port_name();
+            qDebug() << "Arduino is available but not connected to:" << A->getarduino_port_name1();
             break;
         case -1: // Arduino n'est pas disponible
             qDebug() << "Arduino is not available";
